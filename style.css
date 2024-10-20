@@ -1,0 +1,123 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: "Poppins";
+}
+:root {
+   --main-bg-color: #f1f1f1;
+   --header-bg-color: #243642;
+   --header-text-color: #ccd1d3;
+   --text-color: #ffffff;
+   --main-btn-color: #387478;
+   --main-btn-hover-color: #2d5f63;
+}
+html {
+   font-size: 62.5%;
+}
+body{
+   overflow-x: hidden;
+}
+header {
+   height: 15vh;
+   background-color: var(--header-bg-color);
+   display: flex;
+   justify-content: center;
+   letter-spacing: 1.5px;
+   align-items: center;
+   font-size: 3.8rem;
+   color: var(--header-text-color);
+}
+main {
+   background-color: var(--main-bg-color);
+   background-image: radial-gradient(rgba(0, 0, 0, 0.2) 1px, transparent 0);
+   background-size: 60px 60px;
+   padding-top: 1px;
+}
+.search-area {
+   /* background-color: red; */
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   padding: 2.4rem 2.4rem;
+   margin-top: 2rem;
+}
+.search-area input {
+   padding: 0.9rem 1rem;
+   width: 250px;
+   min-width: 80px;
+   border: none;
+   transition: 0.6s;
+   border-radius: 8px;
+   border-color: #6b8385;
+}
+.search-area input:focus {
+   border: 2px solid #387478;
+   outline: none;
+}
+.room-card-area {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+   justify-items: center;
+   margin-top: 3rem;
+   gap: 4.5rem 3rem;
+}
+.room-card {
+   background-color: var(--header-bg-color);
+   /* width: 50%; */
+   border-radius: 14px;
+   overflow: hidden;
+   color: var(--text-color);
+   margin: 1rem;
+}
+.room-card img {
+   width: 100%;
+   height: auto;
+}
+.room-card .room-type {
+   /* background-color: red; */
+   padding-top: 3rem;
+   margin-top: 0.8rem;
+   text-align: center;
+   font-size: 2rem;
+   font-weight: bold;
+}
+.room-card .room-info .separator {
+   width: 0.5px;
+   height: 10px;
+   background-color: #e3e3e3;
+}
+.room-card .room-info {
+   /* background-color: red; */
+   padding: 3rem 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 10px;
+   font-size: 1.4rem;
+   /* margin-top: 1.2em; */
+}
+.room-card .room-reserve-btn {
+   text-align: center;
+   padding: 2.5rem 0;
+}
+.room-card button {
+   border: none;
+   background-color: var(--main-btn-color);
+   color: var(--text-color);
+   padding: 0.8rem 2.4rem;
+   cursor: pointer;
+   border-radius: 8px;
+}
+.room-card button:hover {
+   background-color: var(--main-btn-hover-color); /* Darker on hover */
+}
+@media (max-width: 480px) {
+   header {
+      font-size: 2.5rem; /* Even smaller font size */
+   }
+
+   .room-card {
+      max-width: 100%; /* Full width on mobile */
+   }
+}
