@@ -1,6 +1,14 @@
+:root {
+   --main-bg-color: #f1f1f1;
+   --header-bg-color: #243642;
+   --header-text-color: #ccd1d3;
+   --text-color: #ffffff;
+   --main-btn-color: #387478;
+   --main-btn-hover-color: #2d5f63;
+}
 main {
    display: grid;
-   grid-template-columns: repeat(2, 600px);
+   grid-template-columns: repeat(2, 1fr);
    justify-items: center;
    justify-content: space-evenly;
 }
@@ -10,42 +18,42 @@ main {
    font-weight: 600;
 }
 .separator {
-   background-color: #b0b0b0 ;
+   background-color: #b0b0b0;
    height: 1px;
    width: 100%;
-   margin: .8rem 0 3rem 0;
+   margin: 0.8rem 0 3rem 0;
 }
 form {
    font-size: 1.4rem;
 }
 .personal-details-section {
-   /* background-color: green; */
    padding: 1.1rem 4rem;
    margin: 2rem 0;
    display: flex;
+   width: 500px;
+   max-width: 550px;
    flex-direction: column;
-   /* justify-content: center; */
 }
-
+.personal-details-section input {
+   margin-bottom: 5rem;
+}
 label {
    display: block;
    font-size: 14px;
    margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="date"] {
+input {
    max-width: 320px;
    width: 280px;
    padding: 0.8rem 1.2rem;
-   margin-bottom: 5.5rem;
+   margin-bottom: 2rem;
    border: 1px solid #ccc;
    border-radius: 6px;
    font-size: 1.4rem;
 }
 
-input[type="text"]:focus,
-input[type="date"]:focus {
+input:focus {
    border-color: #66afe9;
    outline: none;
    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
@@ -56,23 +64,73 @@ input[type="text"] {
    background-color: #e9f5fc;
 }
 .room-details-section {
-   background-color: #d9d9d9;
-   padding: 3.1rem 4rem;
+   background-color: #f5f5f5;
+   padding: 3.1rem 2.5rem;
    margin: 2rem 0;
+   min-height: 40rem;
+   height: 57rem;
    display: flex;
    width: 500px;
    max-width: 550px;
    flex-direction: column;
+   gap: 5rem;
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+   border-radius: 14px;
+}
+
+.check-in-out {
+   display: grid; /* Use grid layout for forms */
+   grid-template-columns: repeat(2, 1fr); /* Two columns for symmetry */
+   gap: 2rem; /* Space between inputs */
+   align-items: center;
+}
+.check-in-out label {
+   display: inline;
+   margin-right: 4rem;
+}
+.check-in-out input {
+   max-width: 250px;
+   width: 250px;
+}
+.room-details-section button {
+   background-color: var(--main-btn-color);
+   color: var(--text-color);
+   border: 0;
+   outline: 0;
+   transition: 0.6s;
+   cursor: pointer;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+   padding: 1.1rem;
+   font-size: 1.5rem;
+   border-radius: 6px;
+}
+.room-details-section button:hover {
+   background-color: var(--main-btn-hover-color);
+   transform: translateY(-2px);
 }
 .dropdown-container {
    display: flex;
    justify-content: space-between;
    align-items: center;
 }
+.dropdown-select-item {
+   background-color: #f5f5f5;
+   color: black;
+}
+.dropdown-select-item:hover {
+   background-color: #f5f5f5;
+}
+.dropdown-options {
+   background-color: #f5f5f5;
+}
+.dropdown-options ul li {
+   color: black;
+}
 .dropdown-container p {
    font-size: 1.4rem;
 }
 .dropdown-options {
    width: 200px !important;
+   max-width: 250px;
    right: 10px;
 }

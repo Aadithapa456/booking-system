@@ -27,37 +27,47 @@
             <form action="">
                 <label for="name">Name</label>
                 <input type="text" id="name">
-                <label for="contact">Name</label>
-                <input type="text" id="contact">
-                <label for="check-in">Name</label>
-                <input type="date" id="check-in">
-                <label for="check-out">Name</label>
-                <input type="date" id="check-out">
+                <label for="contact">Contact</label>
+                <input type="number" id="contact">
+                <label for="email">Email:</label>
+                <input type="email" id="email">
             </form>
         </div>
         <div class="room-details-section">
-            <p class="section-title">Room Details</p>
-            <div class="separator"></div>
-            <div class="dropdown-container">
-                <p>Room type:</p>
-                <div class="dropdown-select-item">
-                    <span class="select">
-                        Select your option
-                    </span>
-                    <i class="fa-solid fa-caret-down"></i>
-                </div>
-                <div class="dropdown-options">
-                    <ul id="option">
-                        <li>Architecture</li>
-                        <li>Love</li>
-                        <li>Humor</li>
-                        <li>Satire</li>
-                    </ul>
+            <div class="room-type">
+                <p class="section-title">Room Details</p>
+                <div class="separator"></div>
+                <div class="dropdown-container">
+                    <p>Room type:</p>
+                    <div class="dropdown-select-item">
+                        <span class="select" id="room-type">
+                            Select your option
+                        </span>
+                        <i class="fa-solid fa-caret-down"></i>
+                    </div>
+                    <div class="dropdown-options">
+                        <ul id="option">
+                            <!-- <li>Architecture</li>
+                            <li>Love</li>
+                            <li>Humor</li>
+                            <li>Satire</li> -->
+                        </ul>
+                    </div>
                 </div>
             </div>
+            <form action="" class="check-in-out">
+                <label for="check-in">Check-in Date:</label>
+                <input type="date" id="check-in">
+                <label for="check-out">Check-out Date:</label>
+                <input type="date" id="check-out">
+                <label for="guest-number">Number of Guests</label>
+                <input type="number">
+            </form>
+            <button class="book-btn">Book the room</button>
         </div>
     </main>
-    <script src="assets/js/dropdown.js"></script>
+    <script src="assets/js/booking.js" type="module"></script>
+    <script src="assets/js/dropdown.js" type="module"></script>
 </body>
 
 </html>
