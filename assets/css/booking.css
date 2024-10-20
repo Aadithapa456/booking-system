@@ -1,0 +1,78 @@
+main {
+   display: grid;
+   grid-template-columns: repeat(2, 600px);
+   justify-items: center;
+   justify-content: space-evenly;
+}
+.section-title {
+   color: #0a2540;
+   font-size: 3rem;
+   font-weight: 600;
+}
+.separator {
+   background-color: #b0b0b0 ;
+   height: 1px;
+   width: 100%;
+   margin: .8rem 0 3rem 0;
+}
+form {
+   font-size: 1.4rem;
+}
+.personal-details-section {
+   /* background-color: green; */
+   padding: 1.1rem 4rem;
+   margin: 2rem 0;
+   display: flex;
+   flex-direction: column;
+   /* justify-content: center; */
+}
+
+label {
+   display: block;
+   font-size: 14px;
+   margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="date"] {
+   max-width: 320px;
+   width: 280px;
+   padding: 0.8rem 1.2rem;
+   margin-bottom: 5.5rem;
+   border: 1px solid #ccc;
+   border-radius: 6px;
+   font-size: 1.4rem;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus {
+   border-color: #66afe9;
+   outline: none;
+   box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+/* You can also group similar styles by input type */
+input[type="text"] {
+   background-color: #e9f5fc;
+}
+.room-details-section {
+   background-color: #d9d9d9;
+   padding: 3.1rem 4rem;
+   margin: 2rem 0;
+   display: flex;
+   width: 500px;
+   max-width: 550px;
+   flex-direction: column;
+}
+.dropdown-container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+.dropdown-container p {
+   font-size: 1.4rem;
+}
+.dropdown-options {
+   width: 200px !important;
+   right: 10px;
+}
