@@ -15,8 +15,12 @@
 html {
    font-size: 62.5%;
 }
-body{
+body {
    overflow-x: hidden;
+}
+input {
+   outline: 0;
+   border: 0;
 }
 header {
    height: 15vh;
@@ -33,6 +37,7 @@ main {
    background-image: radial-gradient(rgba(0, 0, 0, 0.2) 1px, transparent 0);
    background-size: 60px 60px;
    padding-top: 1px;
+   min-height: calc(100vh - 15vh);
 }
 .search-area {
    /* background-color: red; */
@@ -46,21 +51,21 @@ main {
    padding: 0.9rem 1rem;
    width: 250px;
    min-width: 80px;
-   border: none;
-   transition: 0.6s;
+   transition: 0.9s;
    border-radius: 8px;
    border-color: #6b8385;
 }
-.search-area input:focus {
-   border: 2px solid #387478;
-   outline: none;
+.search-area #search-room:focus {
+   border: 1px solid #6b8385;
+   box-shadow: none;
 }
 .room-card-area {
    display: grid;
-   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+   grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
    justify-items: center;
    margin-top: 3rem;
-   gap: 4.5rem 3rem;
+   padding: 1rem 2.5rem;
+   gap: 4rem 3.5rem;
 }
 .room-card {
    background-color: var(--header-bg-color);
