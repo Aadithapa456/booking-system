@@ -1,6 +1,6 @@
 export function initializeDropdown(dropdownSelector) {
    let dropDownContainer = document.querySelector(dropdownSelector);
-   let mainItem = document.querySelector(".select");
+   let mainItem = document.querySelector(".selected");
    let options = document.querySelectorAll("#option li");
    dropDownContainer.addEventListener("click", () => {
       dropDownContainer.classList.toggle("active");

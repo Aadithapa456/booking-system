@@ -1,4 +1,5 @@
 import { rooms } from "./room-types.js";
+import { initializeDropdown } from "./dropdown.js";
 
 let roomCardContainer = document.querySelector(".room-card-area");
 let timeout;
@@ -25,9 +26,18 @@ let newRooms = rooms.map((room) => {
    return newRoomCard;
 });
 let roomCards = document.querySelectorAll(".room-card");
+let reserveButtons = document.querySelectorAll(".room-reserve-btn button");
+reserveButtons.forEach((button,index) => {
+   button.addEventListener("click", (e) => {
+      let parent = (e.target.parentElement).parentElement;
+      let selectedRoom = parent.querySelector(".room-type").textContent;
+      localStorage.setItem("room",selectedRoom);
+      window.location.href = "booking.html"; 
+   });
+});
 let userInput = document.querySelector("#search-room");
 userInput.addEventListener("input", (e) => {
-   clearTimeout(timeout)
+   clearTimeout(timeout);
    //Converting the NodeList from cardContainer to Array
    Array.from(roomCards).forEach((item) => {
       const roomType = item
@@ -40,3 +50,4 @@ userInput.addEventListener("input", (e) => {
       }, 1100);
    });
 });
+initializeDropdown(".dropdown-select-item");
