@@ -23,10 +23,20 @@
         <div class="search-area">
             <input type="text" placeholder="Search room" id="search-room">
             <input type="date" id="date" multiple>
-            <select name="" id="">
-                <option value="highest">Highest</option>
-                <option value="highest">Lowest</option>
-            </select>
+            <div class="dropdown-container">
+                <div class="dropdown-select-item">
+                    <span class="select" id="room-type">
+                        Sort By
+                    </span>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+                <div class="dropdown-options">
+                    <ul id="option">
+                        <li>Highest-Lowest</li>
+                        <li>Lowest-Highest</li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="room-card-area">
             <!-- <div class="room-card">
@@ -45,6 +55,7 @@
         </div>
     </main>
     <script src="assets/js/script.js" type="module"></script>
+    <script src="assets/js/dropdown.js" type="module"></script>
 </body>
 
 </html>
