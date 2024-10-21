@@ -17,6 +17,9 @@ let newRooms = rooms.map((room) => {
                     <div class="separator"></div>
                     <div class="bed-info">${room.bedInfo}</div>
                 </div>
+               <div class="price-info">
+                    <span>${room.price}$</span> <span class="night-info">/night</span>
+                </div>
                 <div class="room-reserve-btn">
                     <button class="reserve-btn">Reserve Now</button>
                 </div>
@@ -32,6 +35,7 @@ reserveButtons.forEach((button,index) => {
       let parent = (e.target.parentElement).parentElement;
       let selectedRoom = parent.querySelector(".room-type").textContent;
       localStorage.setItem("room",selectedRoom);
+      localStorage.setItem("price",rooms[index].price);
       window.location.href = "booking.html"; 
    });
 });
