@@ -8,7 +8,6 @@ export function initializeDropdown(dropdownSelector) {
    });
    options.forEach((option) => {
       option.addEventListener("click", () => {
-         // console.log(option.getAttribute("data-price"));
          mainItem.innerHTML = `${option.innerHTML}`;
       });
    });

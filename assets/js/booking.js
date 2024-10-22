@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
    let selectedOption = document.querySelector(".selected"); // Accesing the current selected option in dropdown
    let myRoom = localStorage.getItem("room");
    let selectedRoomPrice = localStorage.getItem("price");
-   // let selectedRoomPrice = "200";
    selectedOption.innerHTML = myRoom;
    roomPriceDisplay.innerHTML = `${selectedRoomPrice} <span>$</span>`; // Updating room price according to selected room
 });
@@ -84,6 +83,7 @@ function updatePricing() {
    if (differenceInTime < 0 || checkInDate.getTime() < currentTime) {
       showErrorCard(errorDialogContainer, "Invalid check-in date");
    } else {
+      // If user hasn't entered both check-in and out date then else part will be executed
       if (
          !isNaN(checkInDate.getTime()) &&
          !isNaN(checkOutDate.getTime()) &&
@@ -125,7 +125,6 @@ function showErrorCard(errorCard, message) {
    }, 3000);
 }
 function hideErrorCard(errorCard) {
-   // console.log(errorCard);
    clearTimeout(errorDialogTimeoutId);
    errorCard.classList.add("hide");
    errorCard.classList.remove("visible");

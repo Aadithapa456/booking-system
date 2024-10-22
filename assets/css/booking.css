@@ -98,8 +98,8 @@ input[type="text"] {
    margin-right: 4rem;
 }
 .check-in-out input {
-   max-width: 250px;
-   width: 250px;
+   min-width: 16rem;
+   width: 22rem;
 }
 .room-details-section button {
    background-color: var(--main-btn-color);
@@ -270,10 +270,12 @@ input[type="text"] {
       width: 90%; /* Allow sections to take up most of the screen width */
    }
    .dropdown-container {
-      flex-direction: column;
       gap: 20px;
    }
    .dropdown-select-item {
       width: 60%;
+   }
+   .check-in-out input{
+      width: 100%;
    }
 }
