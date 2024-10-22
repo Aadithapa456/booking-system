@@ -30,13 +30,13 @@ let newRooms = rooms.map((room) => {
 });
 let roomCards = document.querySelectorAll(".room-card");
 let reserveButtons = document.querySelectorAll(".room-reserve-btn button");
-reserveButtons.forEach((button,index) => {
+reserveButtons.forEach((button, index) => {
    button.addEventListener("click", (e) => {
-      let parent = (e.target.parentElement).parentElement;
+      let parent = e.target.parentElement.parentElement;
       let selectedRoom = parent.querySelector(".room-type").textContent;
-      localStorage.setItem("room",selectedRoom);
-      localStorage.setItem("price",rooms[index].price);
-      window.location.href = "booking.html"; 
+      localStorage.setItem("room", selectedRoom);
+      localStorage.setItem("price", rooms[index].price); // Sets the price according to index of corresponding room from JSON data
+      window.location.href = "booking.html";
    });
 });
 let userInput = document.querySelector("#search-room");

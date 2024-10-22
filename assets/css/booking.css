@@ -12,6 +12,9 @@ main {
    justify-items: center;
    justify-content: space-evenly;
 }
+.flex {
+   display: flex;
+}
 .section-title {
    color: #0a2540;
    font-size: 3rem;
@@ -29,7 +32,6 @@ form {
 .personal-details-section {
    padding: 3.1rem 3.5rem;
    margin: 2rem 0;
-   display: flex;
    width: 500px;
    max-width: 550px;
    background-color: #f5f5f5;
@@ -74,7 +76,6 @@ input[type="text"] {
    margin: 2rem 0;
    min-height: 50rem;
    height: 70rem;
-   display: flex;
    width: 500px;
    max-width: 550px;
    flex-direction: column;
@@ -114,7 +115,6 @@ input[type="text"] {
    transform: translateY(-2px);
 }
 .dropdown-container {
-   display: flex;
    justify-content: space-between;
    align-items: center;
 }
@@ -140,111 +140,117 @@ input[type="text"] {
    right: 10px;
 }
 
-.pricing{
-   display: flex;
+.pricing {
    justify-content: space-between;
    font-size: 1.6rem;
 }
-.price-details{
+.price-details {
    font-size: 1.5rem;
 }
-#price-separator{
+#price-separator {
    margin: 0;
    height: 1px;
    width: 100%;
 }
-/* Popup styling */
-.pop-up {
-   height: 100vh;
-   width: 100vw;
+
+/* Error card styling */
+.error-container {
+   background-color: #ffb880;
+   min-width: 28rem;
+   width: 32rem;
+   opacity: 0;
+   justify-content: space-between;
+   align-items: center;
+   font-size: 1.3rem;
    position: absolute;
-   display: none;
-   top: 0;
-   border-radius: 10px;
+   top: 20px;
+   right: 35px;
+   border-left: 6px solid #d64b18;
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.error-left {
+   /* margin-left: 4px; */
+   padding: 1rem 0.9rem;
+   /* background-color: #e67e22; */
+}
+.error-left i {
+   color: #ffffff;
+   opacity: 0.7;
+   background-color: #ff4500;
+   width: 4rem;
+   height: 4rem;
    justify-content: center;
    align-items: center;
-   z-index: 999;
-   font-family: "Poppins";
+   border-radius: 50%;
+   font-size: 1.7rem;
 }
-.result {
-   width: 40rem;
-   display: none;
-   padding: 3rem 2rem;
-   border-radius: 20px;
-   background-color: #fafafa;
-   border-radius: 20px;
-   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-   color: black;
+.error-right {
    font-size: 1.4rem;
-   display: flex;
-   flex-direction: column;
+   width: 100%;
+   padding-left: 3rem;
+   justify-content: space-between;
+   /* width: 70%; */
    align-items: center;
-   font-weight: 400;
 }
-.result .result-title {
-   font-size: 2.4rem;
-   margin-bottom: 1rem;
-   letter-spacing: 1.8px;
-   font-weight: 700;
-   color: #333;
+.error-right .error-text {
+   color: #333333;
+   font-size: 1.5rem;
 }
-.result .result-info {
-   margin: 3rem 0;
-   font-size: 1.8rem;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   gap: 14px;
-   font-weight: 500;
-}
-
-.result .result-highlight {
-   font-weight: 700;
-   font-size: 2.4rem;
-   color: #28a745;
-}
-.result .close-pop-up {
-   margin: 2rem 0 1rem 0;
-}
-.result .close-pop-up button {
-   padding: 1.5rem 5rem;
-   border: none;
-   background-color: #007bff;
-   color: white;
-   border-radius: 10px;
-   font-size: 1.6rem;
+.error-remove {
    cursor: pointer;
    transition: 0.5s;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-.result .close-pop-up button:hover {
-   background-color: #0056b3;
-   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+.error-remove button {
+   all: unset;
+   background-color: #ff7d16;
+   padding: 1rem 0.9rem;
 }
-.fly-in {
-   animation: scale-in 0.3s linear forwards;
+.error-remove button:hover {
+   background-color: #cf6006;
 }
-.fly-out {
-   animation: scale-out 0.4s linear;
+.error-right i {
+   width: 4rem;
+   height: 4rem;
+   font-size: 1.7rem;
+   justify-content: center;
+   align-items: center;
+   color: white;
 }
-
-@keyframes scale-in {
-   from {
-      transform: rotateX(90deg) scale(0);
-      opacity: 0;
+.error-container.visible {
+   animation: error-visible 1s ease-in-out;
+   opacity: 1;
+}
+.error-container.hide {
+   animation: error-hide 1.2s ease-in-out;
+   /* display: none; */
+   transition: opacity 4s;
+   opacity: 0;
+}
+@keyframes error-visible {
+   0% {
+      transform: translateX(100%);
    }
-   to {
-      transform: rotateX(6deg) scale(1.2);
-      opacity: 1;
+   40% {
+      transform: translateX(-10%);
+   }
+   80% {
+      transform: translateX(0%);
+   }
+   100% {
+      transform: translateX(-10px);
    }
 }
-@keyframes scale-out {
-   from {
-      transform: rotateX(6deg) scale(1.2);
-      opacity: 1;
+@keyframes error-hide {
+   0% {
+      transform: translateX(-2%);
    }
-   to {
-      transform: rotateX(90deg) scale(0);
-      opacity: 0;
+   40% {
+      transform: translateX(0%);
+   }
+   80% {
+      transform: translateX(-10%);
+   }
+   100% {
+      transform: translateX(100%);
    }
 }

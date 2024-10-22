@@ -21,7 +21,7 @@
         <div class="header-text">Hotel XYZ</div>
     </header>
     <main>
-        <div class="personal-details-section">
+        <div class="personal-details-section flex">
             <p class="section-title">Personal Details</p>
             <div class="separator"></div>
             <form action="">
@@ -33,11 +33,11 @@
                 <input type="email" id="email">
             </form>
         </div>
-        <div class="room-details-section">
+        <div class="room-details-section flex">
             <div class="room-type">
                 <p class="section-title">Room Details</p>
                 <div class="separator"></div>
-                <div class="dropdown-container">
+                <div class="dropdown-container flex">
                     <p>Room type:</p>
                     <div class="dropdown-select-item">
                         <span class="selected" id="room-type">
@@ -64,14 +64,22 @@
                 <input type="number" id="guest-number">
             </form>
             <div class="separator" id="price-separator"></div>
-            <div class="pricing">
+            <div class="pricing flex">
                 <div class="price-label">Total Price:</div>
                 <div class="price-details">500$</div>
             </div>
             <button class="book-btn">Book the room</button>
         </div>
     </main>
-    <div class="pop-up">
+    <div class="error-container flex">
+        <div class="error-left"><i class="fa-solid fa-exclamation flex"></i></div>
+        <div class="error-right flex">
+            <div class="error-text">Error occured</div>
+            <div class="error-remove"><button class="error-remove-btn"><i class="fa-solid fa-xmark flex"></i></button>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="pop-up">
         <div class="result">
             <div class="result-title">Hello</div>
             <div class="result-info">
@@ -80,7 +88,7 @@
                 <button id="close-btn">Close</button>
             </div>
         </div>
-    </div>
+    </div> -->
     <script src="assets/js/booking.js" type="module"></script>
     <script src="assets/js/dropdown.js" type="module"></script>
 </body>
