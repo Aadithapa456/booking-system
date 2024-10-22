@@ -4,46 +4,61 @@ import { rooms } from "./room-types.js";
 //EMAIL REGEX
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Accessing error dialogue elements
-let errorCardContainer = document.querySelector(".error-container");
-let closeErrorCardBtn = document.querySelector(".error-remove-btn");
-let timeoutId;
+let errorDialogContainer = document.querySelector(".error-container");
+let closeErrorDialogButton = document.querySelector(".error-remove-btn");
+let errorDialogTimeoutId;
 
-let inputName = document.querySelector("#name");
-let inputContact = document.querySelector("#contact");
-let inputEmail = document.querySelector("#email");
-let inputCheckIn = document.querySelector("#check-in");
-let inputCheckOut = document.querySelector("#check-out");
+let nameInputField = document.querySelector("#name");
+let contactInputField = document.querySelector("#contact");
+let emailInputField = document.querySelector("#email");
+let checkinInputField = document.querySelector("#check-in");
+let checkoutInputField = document.querySelector("#check-out");
 let checkInDate, checkOutDate, stayPeriod;
 let bookBtn = document.querySelector(".book-btn");
-let noOfGuests = document.querySelector("#guest-number");
-let roomCost = document.querySelector(".price-details");
+let noOfGuestsInputField = document.querySelector("#guest-number");
+let roomPriceDisplay = document.querySelector(".price-details");
 let roomDropdownContainer = document.querySelector(".dropdown-options ul");
-
+// let pricing = [];
 //Populating the dropdown
-rooms.map((room) => {
+rooms.map((room, index) => {
    let li = document.createElement("li");
+   li.setAttribute("data-price", room.price);
    li.innerHTML = `${room.type}`;
    roomDropdownContainer.appendChild(li);
 });
 // Initializing the dropdown logic
-initializeDropdown(".dropdown-select-item");
+initializeDropdown(".dropdown-select-item", roomPriceDisplay);
 
-let selectedOption = document.querySelector(".selected"); // Accesing the current selected option in dropdown
-let myRoom = localStorage.getItem("room");
-let roomPrice = localStorage.getItem("price");
-selectedOption.innerHTML = myRoom;
-roomCost.innerHTML = `${roomPrice} $`; // Updating room price according to selected room
+// Getting rate of selected room
+let currentRate;
+let optionsContainer = document.querySelectorAll("#option li");
+optionsContainer.forEach((option) => {
+   option.addEventListener("click", () => {
+      let selectedRate = option.getAttribute("data-price");
+      roomPriceDisplay.innerHTML = `${selectedRate} <span>$</span`;
+      currentRate = selectedRate;
+   });
+});
+document.addEventListener("DOMContentLoaded", () => {
+   let selectedOption = document.querySelector(".selected"); // Accesing the current selected option in dropdown
+   let myRoom = localStorage.getItem("room");
+   let selectedRoomPrice = localStorage.getItem("price");
+   // let selectedRoomPrice = "200";
+   selectedOption.innerHTML = myRoom;
+   roomPriceDisplay.innerHTML = `${selectedRoomPrice} <span>$</span>`; // Updating room price according to selected room
+});
+
 function reservation(
    name,
    contact,
    email,
    checkin,
    checkout,
-   noOfGuests,
+   noOfGuestsInputField,
    daysStaying
 ) {
-   if (!emailRegex.test(inputEmail.value)) {
-      showErrorCard(errorCardContainer, "Invalid Email");
+   if (!emailRegex.test(emailInputField.value)) {
+      showErrorCard(errorDialogContainer, "Invalid Email");
    }
 
    console.log({
@@ -52,42 +67,50 @@ function reservation(
       Email: email.value,
       checkin: checkin,
       checkout: checkout,
-      number: noOfGuests.value,
+      "Guest Number": noOfGuestsInputField.value,
       daysStaying: daysStaying,
    });
-   // console.log(checkOutDate);
 }
-function updatePricing(roomPrice) {
+function updatePricing() {
    let currentTime = new Date();
    currentTime.setHours(0, 0, 0, 0); // Normalize currentTime to midnight
-   checkInDate = new Date(inputCheckIn.value);
-   checkOutDate = new Date(inputCheckOut.value);
+   checkInDate = new Date(checkinInputField.value);
+   checkOutDate = new Date(checkoutInputField.value);
    checkOutDate.setHours(12, 0, 0, 0);
    let differenceInTime = checkOutDate.getTime() - checkInDate.getTime();
    stayPeriod = Math.floor(differenceInTime / (1000 * 3600 * 24)); //Converts milliseconds to days;
+
    if (differenceInTime < 0 || checkInDate.getTime() < currentTime) {
-      showErrorCard(errorCardContainer, "Invalid check-in date");
-      roomCost.innerHTML = ` `;
+      showErrorCard(errorDialogContainer, "Invalid check-in date");
    } else {
-      roomCost.textContent = `${stayPeriod * roomPrice} $`;
+      if (
+         !isNaN(checkInDate.getTime()) &&
+         !isNaN(checkOutDate.getTime()) &&
+         stayPeriod > 0
+      ) {
+         let totalPrice = stayPeriod * currentRate;
+         roomPriceDisplay.innerHTML = `${totalPrice} <span>$</span>`;
+      } else {
+         roomPriceDisplay.innerHTML = `${currentRate}<span>$</span>`;
+      }
    }
 }
 
 bookBtn.addEventListener("click", () =>
    reservation(
-      inputName,
-      inputContact,
-      inputEmail,
+      nameInputField,
+      contactInputField,
+      emailInputField,
       checkInDate,
       checkOutDate,
-      noOfGuests,
+      noOfGuestsInputField,
       stayPeriod
    )
 );
-inputCheckIn.addEventListener("input", () => updatePricing(roomPrice));
-inputCheckOut.addEventListener("input", () => updatePricing(roomPrice));
-closeErrorCardBtn.addEventListener("click", () => {
-   hideErrorCard(errorCardContainer, 1190);
+checkinInputField.addEventListener("input", () => updatePricing());
+checkoutInputField.addEventListener("input", () => updatePricing());
+closeErrorDialogButton.addEventListener("click", () => {
+   hideErrorCard(errorDialogContainer, 1190);
 });
 
 function showErrorCard(errorCard, message) {
@@ -102,10 +125,10 @@ function showErrorCard(errorCard, message) {
 }
 function hideErrorCard(errorCard) {
    // console.log(errorCard);
-   clearTimeout(timeoutId);
+   clearTimeout(errorDialogTimeoutId);
    errorCard.classList.add("hide");
    errorCard.classList.remove("visible");
-   timeoutId = setTimeout(() => {
+   errorDialogTimeoutId = setTimeout(() => {
       errorCard.style.display = "none";
    }, 1190);
 }
