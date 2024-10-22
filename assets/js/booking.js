@@ -1,8 +1,9 @@
 import { initializeDropdown } from "./dropdown.js";
 import { rooms } from "./room-types.js";
 
-//EMAIL REGEX
+// REGEX
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^(98|97|96|01|02|03|04|05|06|07|08|09)\d{8}$/;
 // Accessing error dialogue elements
 let errorDialogContainer = document.querySelector(".error-container");
 let closeErrorDialogButton = document.querySelector(".error-remove-btn");
@@ -57,8 +58,8 @@ function reservation(
    noOfGuestsInputField,
    daysStaying
 ) {
-   if (!emailRegex.test(emailInputField.value)) {
-      showErrorCard(errorDialogContainer, "Invalid Email");
+   if (!emailRegex.test(email.value) || !phoneRegex.test(contact.value)) {
+      showErrorCard(errorDialogContainer, "Invalid Info");
    }
 
    console.log({
