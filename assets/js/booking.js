@@ -4,11 +4,15 @@ import { rooms } from "./room-types.js";
 // REGEX
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^(98|97|96|01|02|03|04|05|06|07|08|09)\d{8}$/;
-// Accessing error dialogue elements
+// Accessing error dialog elements
 let errorDialogContainer = document.querySelector(".error-container");
 let closeErrorDialogButton = document.querySelector(".error-remove-btn");
 let errorDialogTimeoutId;
-
+// Accessing success dialog elements
+let successDialogContainer = document.querySelector(
+   ".success-dialog-container"
+);
+let closeSuccessDialogBtn = document.querySelector(".success-close-btn");
 let nameInputField = document.querySelector("#name");
 let contactInputField = document.querySelector("#contact");
 let emailInputField = document.querySelector("#email");
@@ -57,10 +61,15 @@ function reservation(
    noOfGuestsInputField,
    daysStaying
 ) {
-   if (!emailRegex.test(email.value) || !phoneRegex.test(contact.value)) {
-      showErrorCard(errorDialogContainer, "Invalid Info");
+   if (!emailRegex.test(email.value) && !phoneRegex.test(contact.value)) {
+      showErrorDialog(errorDialogContainer, "Invalid email & contact");
+   } else if (!phoneRegex.test(contact.value)) {
+      showErrorDialog(errorDialogContainer, "Invalid contact");
+   } else if (!emailRegex.test(email.value)) {
+      showErrorDialog(errorDialogContainer, "Invalid email");
+   } else {
+      showSuccessDialog(successDialogContainer);
    }
-
    console.log({
       Name: name.value,
       Contact: contact.value,
@@ -81,7 +90,7 @@ function updatePricing() {
    stayPeriod = Math.floor(differenceInTime / (1000 * 3600 * 24)); //Converts milliseconds to days;
 
    if (differenceInTime < 0 || checkInDate.getTime() < currentTime) {
-      showErrorCard(errorDialogContainer, "Invalid check-in date");
+      showErrorDialog(errorDialogContainer, "Invalid check-in date");
    } else {
       // If user hasn't entered both check-in and out date then else part will be executed
       if (
@@ -114,7 +123,7 @@ closeErrorDialogButton.addEventListener("click", () => {
    hideErrorCard(errorDialogContainer, 1190);
 });
 
-function showErrorCard(errorCard, message) {
+function showErrorDialog(errorCard, message) {
    let errorText = document.querySelector(".error-text");
    errorText.innerHTML = message;
    errorCard.style.display = "flex";
@@ -122,7 +131,7 @@ function showErrorCard(errorCard, message) {
    errorCard.classList.remove("hide");
    setTimeout(() => {
       hideErrorCard(errorCard);
-   }, 3000);
+   }, 3200);
 }
 function hideErrorCard(errorCard) {
    clearTimeout(errorDialogTimeoutId);
@@ -131,4 +140,24 @@ function hideErrorCard(errorCard) {
    errorDialogTimeoutId = setTimeout(() => {
       errorCard.style.display = "none";
    }, 1190);
+}
+
+function showSuccessDialog(successDialog) {
+   successDialog.classList.add("visible");
+   // successDialog.style.display = "flex";
+}
+closeSuccessDialogBtn.addEventListener("click", () => {
+   hideSuccessDialog(successDialogContainer,nameInputField,contactInputField,emailInputField,checkinInputField,checkoutInputField);
+});
+function hideSuccessDialog(successDialog,name,contact,email,checkin,checkout) {
+   successDialog.classList.add("hide");
+   successDialog.classList.remove("visible");
+   //Reseting the input field
+   name.value = "";
+   contact.value = "";
+   email.value = "";
+   checkin.value = "";
+   checkout.value = "";
+   
+   // successDialog.style.display = "none";
 }
