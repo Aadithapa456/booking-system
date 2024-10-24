@@ -5,6 +5,7 @@ export const rooms = [
       capacity: 1,
       bedInfo: "1 Queen Sized",
       price: 100,
+      status: "Pending",
       selected: false,
    },
    {
@@ -21,6 +22,7 @@ export const rooms = [
       capacity: 2,
       bedInfo: "2 Queen Sized",
       price: 200,
+      status: "Pending",
       selected: false,
    },
    {
@@ -29,6 +31,7 @@ export const rooms = [
       capacity: 3,
       bedInfo: "1 King Sized + 1 Sofa Bed",
       price: 300,
+      status: "Pending",
       selected: false,
    },
    {
@@ -37,6 +40,7 @@ export const rooms = [
       capacity: 4,
       bedInfo: "2 King Sized",
       price: 400,
+      status: "Pending",
       selected: false,
    },
    {
@@ -45,6 +49,7 @@ export const rooms = [
       capacity: 4,
       bedInfo: "1 King Sized + 2 Single Beds",
       price: 350,
+      status: "Pending",
       selected: false,
    },
 ];

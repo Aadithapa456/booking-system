@@ -4,11 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
+    <style>
+    </style>
 </head>
 
 <body>
-    
+    <aside class="sidebar">
+        <div class="logo">Admin Dashboard</div>
+        <ul class="sidebar-links">
+            <!-- <li><button class="Dashboard">Dashboard</button></li> -->
+            <li><button class="users-btn">User</button></li>
+            <li><button class="bookings-btn">Bookings</button></li>
+            <li><button class="manage-btn">Manage Rooms</button></li>
+        </ul>
+    </aside>
+    <main>
+        <div class="user-welcome">Hello user</div>
+        <div class="main-content">
+            <section class="content-section">
+                <h2>Recent Activity</h2>
+                <table class="activity-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Room Booked</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <!-- <tbody>
+                        <tr>
+                            <td>Room booked</td>
+                            <td>xyz@gmail.com</td>
+                            <td>9862314312</td>
+                            <td>Deluxe Room</td>
+                            <td>Booked</td>
+                        </tr>
+                        <tr>
+                            <td>Room booked</td>
+                            <td>xyz@gmail.com</td>
+                            <td>9862314312</td>
+                            <td>Deluxe Room</td>
+                            <td>Booked</td>
+                        </tr>
+                    </tbody> -->
+                </table>
+            </section>
+        </div>
+    </main>
+    <script src="../assets/js/admin.js"></script>
 </body>
 
 </html>
