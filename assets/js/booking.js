@@ -46,9 +46,12 @@ optionsContainer.forEach((option) => {
 });
 document.addEventListener("DOMContentLoaded", () => {
    let selectedOption = document.querySelector(".selected"); // Accesing the current selected option in dropdown
-   let myRoom = localStorage.getItem("room");
-   let selectedRoomPrice = localStorage.getItem("price");
-   selectedOption.innerHTML = myRoom;
+   let room = JSON.parse(localStorage.getItem("rooms"));
+   let selectedRoom = room.find((currentRoom) => {
+      return currentRoom.selected === true;
+   });
+   let selectedRoomPrice = selectedRoom.price;
+   selectedOption.innerHTML = selectedRoom.type;
    roomPriceDisplay.innerHTML = `${selectedRoomPrice} <span>$</span>`; // Updating room price according to selected room
 });
 
@@ -147,17 +150,38 @@ function showSuccessDialog(successDialog) {
    // successDialog.style.display = "flex";
 }
 closeSuccessDialogBtn.addEventListener("click", () => {
-   hideSuccessDialog(successDialogContainer,nameInputField,contactInputField,emailInputField,checkinInputField,checkoutInputField);
+   hideSuccessDialog(successDialogContainer);
 });
-function hideSuccessDialog(successDialog,name,contact,email,checkin,checkout) {
+function hideSuccessDialog(successDialog) {
    successDialog.classList.add("hide");
    successDialog.classList.remove("visible");
-   //Reseting the input field
-   name.value = "";
-   contact.value = "";
-   email.value = "";
-   checkin.value = "";
-   checkout.value = "";
-   
-   // successDialog.style.display = "none";
+   resetForm();
+}
+function resetForm() {
+   showBookingSummary(
+      nameInputField.value,
+      contactInputField.value,
+      emailInputField.value,
+      checkin
+   );
+   nameInputField.value = "";
+   contactInputField.value = "";
+   emailInputField.value = "";
+   checkinInputField.value = "";
+   checkoutInputField.value = "";
+   roomPriceDisplay.innerHTML = "";
+}
+function showBookingSummary(name, contact, email, checkin, checkout) {
+   const summaryDialog = document.createElement("div");
+   summaryDialog.classList.add("summary-dialog");
+   summaryDialog.innerHTML = `      
+       <h2>Booking Summary</h2>
+       <p><strong>Name:</strong> ${name}</p>
+       <p><strong>Contact:</strong> ${contact}</p>
+       <p><strong>Email:</strong> ${email}</p>
+       <p><strong>Check-in Date:</strong> ${checkin}</p>
+       <p><strong>Check-out Date:</strong> ${checkout}</p>
+       <button onclick="closeSummary()">Close</button>
+   `;
+   document.body.appendChild(summaryDialog);
 }

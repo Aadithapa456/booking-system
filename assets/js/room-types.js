@@ -5,6 +5,7 @@ export const rooms = [
       capacity: 1,
       bedInfo: "1 Queen Sized",
       price: 100,
+      selected: false,
    },
    {
       type: "Deluxe Room",
@@ -12,6 +13,7 @@ export const rooms = [
       capacity: 2,
       bedInfo: "1 King Sized",
       price: 150,
+      selected: false,
    },
    {
       type: "Premium Room",
@@ -19,6 +21,7 @@ export const rooms = [
       capacity: 2,
       bedInfo: "2 Queen Sized",
       price: 200,
+      selected: false,
    },
    {
       type: "Suite",
@@ -26,6 +29,7 @@ export const rooms = [
       capacity: 3,
       bedInfo: "1 King Sized + 1 Sofa Bed",
       price: 300,
+      selected: false,
    },
    {
       type: "Executive Suite",
@@ -33,6 +37,7 @@ export const rooms = [
       capacity: 4,
       bedInfo: "2 King Sized",
       price: 400,
+      selected: false,
    },
    {
       type: "Family Room",
@@ -40,5 +45,6 @@ export const rooms = [
       capacity: 4,
       bedInfo: "1 King Sized + 2 Single Beds",
       price: 350,
+      selected: false,
    },
 ];
