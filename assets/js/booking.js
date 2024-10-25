@@ -10,7 +10,7 @@ let closeErrorDialogButton = document.querySelector(".error-remove-btn");
 let errorDialogTimeoutId;
 // Accessing success dialog elements
 let successDialogContainer = document.querySelector(
-   ".success-dialog-container"
+  ".success-dialog-container"
 );
 let closeSuccessDialogBtn = document.querySelector(".success-close-btn");
 let nameInputField = document.querySelector("#name");
@@ -26,10 +26,10 @@ let roomDropdownContainer = document.querySelector(".dropdown-options ul");
 // let pricing = [];
 //Populating the dropdown
 rooms.map((room, index) => {
-   let li = document.createElement("li");
-   li.setAttribute("data-price", room.price);
-   li.innerHTML = `${room.type}`;
-   roomDropdownContainer.appendChild(li);
+  let li = document.createElement("li");
+  li.setAttribute("data-price", room.price);
+  li.innerHTML = `${room.type}`;
+  roomDropdownContainer.appendChild(li);
 });
 // Initializing the dropdown logic
 initializeDropdown(".dropdown-select-item", roomPriceDisplay);
@@ -38,143 +38,143 @@ initializeDropdown(".dropdown-select-item", roomPriceDisplay);
 let currentRate;
 let optionsContainer = document.querySelectorAll("#option li");
 optionsContainer.forEach((option) => {
-   option.addEventListener("click", () => {
-      let selectedRate = option.getAttribute("data-price");
-      roomPriceDisplay.innerHTML = `${selectedRate} <span>$</span`;
-      currentRate = selectedRate;
-   });
+  option.addEventListener("click", () => {
+    let selectedRate = option.getAttribute("data-price");
+    roomPriceDisplay.innerHTML = `${selectedRate} <span>$</span`;
+    currentRate = selectedRate;
+  });
 });
 document.addEventListener("DOMContentLoaded", () => {
-   let selectedOption = document.querySelector(".selected"); // Accesing the current selected option in dropdown
-   let room = JSON.parse(localStorage.getItem("rooms"));
-   let selectedRoom = room.find((currentRoom) => {
-      return currentRoom.selected === true;
-   });
-   let selectedRoomPrice = selectedRoom.price;
-   selectedOption.innerHTML = selectedRoom.type;
-   roomPriceDisplay.innerHTML = `${selectedRoomPrice} <span>$</span>`; // Updating room price according to selected room
+  let selectedOption = document.querySelector(".selected"); // Accesing the current selected option in dropdown
+  let room = JSON.parse(localStorage.getItem("rooms"));
+  let selectedRoom = room.find((currentRoom) => {
+    return currentRoom.selected === true;
+  });
+  let selectedRoomPrice = selectedRoom.price;
+  selectedOption.innerHTML = selectedRoom.type;
+  roomPriceDisplay.innerHTML = `${selectedRoomPrice} <span>$</span>`; // Updating room price according to selected room
 });
 
 function reservation(
-   name,
-   contact,
-   email,
-   checkin,
-   checkout,
-   noOfGuestsInputField,
-   daysStaying
+  name,
+  contact,
+  email,
+  checkin,
+  checkout,
+  noOfGuestsInputField,
+  daysStaying
 ) {
-   if (!emailRegex.test(email.value) && !phoneRegex.test(contact.value)) {
-      showErrorDialog(errorDialogContainer, "Invalid email & contact");
-   } else if (!phoneRegex.test(contact.value)) {
-      showErrorDialog(errorDialogContainer, "Invalid contact");
-   } else if (!emailRegex.test(email.value)) {
-      showErrorDialog(errorDialogContainer, "Invalid email");
-   } else {
-      showSuccessDialog(successDialogContainer);
-   }
-   console.log({
-      Name: name.value,
-      Contact: contact.value,
-      Email: email.value,
-      checkin: checkin,
-      checkout: checkout,
-      "Guest Number": noOfGuestsInputField.value,
-      daysStaying: daysStaying,
-   });
+  if (!emailRegex.test(email.value) && !phoneRegex.test(contact.value)) {
+    showErrorDialog(errorDialogContainer, "Invalid email & contact");
+  } else if (!phoneRegex.test(contact.value)) {
+    showErrorDialog(errorDialogContainer, "Invalid contact");
+  } else if (!emailRegex.test(email.value)) {
+    showErrorDialog(errorDialogContainer, "Invalid email");
+  } else {
+    showSuccessDialog(successDialogContainer);
+  }
+  console.log({
+    Name: name.value,
+    Contact: contact.value,
+    Email: email.value,
+    checkin: checkin,
+    checkout: checkout,
+    "Guest Number": noOfGuestsInputField.value,
+    daysStaying: daysStaying,
+  });
 }
 function updatePricing() {
-   let currentTime = new Date();
-   currentTime.setHours(0, 0, 0, 0); // Normalize currentTime to midnight
-   checkInDate = new Date(checkinInputField.value);
-   checkOutDate = new Date(checkoutInputField.value);
-   checkOutDate.setHours(12, 0, 0, 0);
-   let differenceInTime = checkOutDate.getTime() - checkInDate.getTime();
-   stayPeriod = Math.floor(differenceInTime / (1000 * 3600 * 24)); //Converts milliseconds to days;
+  let currentTime = new Date();
+  currentTime.setHours(0, 0, 0, 0); // Normalize currentTime to midnight
+  checkInDate = new Date(checkinInputField.value);
+  checkOutDate = new Date(checkoutInputField.value);
+  checkOutDate.setHours(12, 0, 0, 0);
+  let differenceInTime = checkOutDate.getTime() - checkInDate.getTime();
+  stayPeriod = Math.floor(differenceInTime / (1000 * 3600 * 24)); //Converts milliseconds to days;
 
-   if (differenceInTime < 0 || checkInDate.getTime() < currentTime) {
-      showErrorDialog(errorDialogContainer, "Invalid check-in date");
-   } else {
-      // If user hasn't entered both check-in and out date then else part will be executed
-      if (
-         !isNaN(checkInDate.getTime()) &&
-         !isNaN(checkOutDate.getTime()) &&
-         stayPeriod > 0
-      ) {
-         let totalPrice = stayPeriod * currentRate;
-         roomPriceDisplay.innerHTML = `${totalPrice} <span>$</span>`;
-      } else {
-         roomPriceDisplay.innerHTML = `${currentRate}<span>$</span>`;
-      }
-   }
+  if (differenceInTime < 0 || checkInDate.getTime() < currentTime) {
+    showErrorDialog(errorDialogContainer, "Invalid check-in date");
+  } else {
+    // If user hasn't entered both check-in and out date then else part will be executed
+    if (
+      !isNaN(checkInDate.getTime()) &&
+      !isNaN(checkOutDate.getTime()) &&
+      stayPeriod > 0
+    ) {
+      let totalPrice = stayPeriod * currentRate;
+      roomPriceDisplay.innerHTML = `${totalPrice} <span>$</span>`;
+    } else {
+      roomPriceDisplay.innerHTML = `${currentRate}<span>$</span>`;
+    }
+  }
 }
 
 bookBtn.addEventListener("click", () =>
-   reservation(
-      nameInputField,
-      contactInputField,
-      emailInputField,
-      checkInDate,
-      checkOutDate,
-      noOfGuestsInputField,
-      stayPeriod
-   )
+  reservation(
+    nameInputField,
+    contactInputField,
+    emailInputField,
+    checkInDate,
+    checkOutDate,
+    noOfGuestsInputField,
+    stayPeriod
+  )
 );
 checkinInputField.addEventListener("input", () => updatePricing());
 checkoutInputField.addEventListener("input", () => updatePricing());
 closeErrorDialogButton.addEventListener("click", () => {
-   hideErrorCard(errorDialogContainer, 1190);
+  hideErrorCard(errorDialogContainer, 1190);
 });
 
 function showErrorDialog(errorCard, message) {
-   let errorText = document.querySelector(".error-text");
-   errorText.innerHTML = message;
-   errorCard.style.display = "flex";
-   errorCard.classList.add("visible");
-   errorCard.classList.remove("hide");
-   setTimeout(() => {
-      hideErrorCard(errorCard);
-   }, 3200);
+  let errorText = document.querySelector(".error-text");
+  errorText.innerHTML = message;
+  errorCard.style.display = "flex";
+  errorCard.classList.add("visible");
+  errorCard.classList.remove("hide");
+  setTimeout(() => {
+    hideErrorCard(errorCard);
+  }, 3200);
 }
 function hideErrorCard(errorCard) {
-   clearTimeout(errorDialogTimeoutId);
-   errorCard.classList.add("hide");
-   errorCard.classList.remove("visible");
-   errorDialogTimeoutId = setTimeout(() => {
-      errorCard.style.display = "none";
-   }, 1190);
+  clearTimeout(errorDialogTimeoutId);
+  errorCard.classList.add("hide");
+  errorCard.classList.remove("visible");
+  errorDialogTimeoutId = setTimeout(() => {
+    errorCard.style.display = "none";
+  }, 1190);
 }
 
 function showSuccessDialog(successDialog) {
-   successDialog.classList.add("visible");
-   // successDialog.style.display = "flex";
+  successDialog.classList.add("visible");
+  // successDialog.style.display = "flex";
 }
 closeSuccessDialogBtn.addEventListener("click", () => {
-   hideSuccessDialog(successDialogContainer);
+  hideSuccessDialog(successDialogContainer);
 });
 function hideSuccessDialog(successDialog) {
-   successDialog.classList.add("hide");
-   successDialog.classList.remove("visible");
-   resetForm();
+  successDialog.classList.add("hide");
+  successDialog.classList.remove("visible");
+  resetForm();
 }
 function resetForm() {
-   showBookingSummary(
-      nameInputField.value,
-      contactInputField.value,
-      emailInputField.value,
-      checkin
-   );
-   nameInputField.value = "";
-   contactInputField.value = "";
-   emailInputField.value = "";
-   checkinInputField.value = "";
-   checkoutInputField.value = "";
-   roomPriceDisplay.innerHTML = "";
+  showBookingSummary(
+    nameInputField.value,
+    contactInputField.value,
+    emailInputField.value,
+    checkin
+  );
+  nameInputField.value = "";
+  contactInputField.value = "";
+  emailInputField.value = "";
+  checkinInputField.value = "";
+  checkoutInputField.value = "";
+  roomPriceDisplay.innerHTML = "";
 }
 function showBookingSummary(name, contact, email, checkin, checkout) {
-   const summaryDialog = document.createElement("div");
-   summaryDialog.classList.add("summary-dialog");
-   summaryDialog.innerHTML = `      
+  const summaryDialog = document.createElement("div");
+  summaryDialog.classList.add("summary-dialog");
+  summaryDialog.innerHTML = `      
        <h2>Booking Summary</h2>
        <p><strong>Name:</strong> ${name}</p>
        <p><strong>Contact:</strong> ${contact}</p>
@@ -183,5 +183,9 @@ function showBookingSummary(name, contact, email, checkin, checkout) {
        <p><strong>Check-out Date:</strong> ${checkout}</p>
        <button onclick="closeSummary()">Close</button>
    `;
-   document.body.appendChild(summaryDialog);
+  document.body.appendChild(summaryDialog);
+}
+
+function addRoom(){
+   
 }

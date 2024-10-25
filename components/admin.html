@@ -7,24 +7,77 @@
     <title>Document</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/admin.css">
-    <style>
-    </style>
+    <script src="https://kit.fontawesome.com/bed699dc9b.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <aside class="sidebar">
-        <div class="logo">Admin Dashboard</div>
-        <ul class="sidebar-links">
-            <!-- <li><button class="Dashboard">Dashboard</button></li> -->
-            <li><button class="users-btn">User</button></li>
-            <li><button class="bookings-btn">Bookings</button></li>
-            <li><button class="manage-btn">Manage Rooms</button></li>
-        </ul>
-    </aside>
-    <main>
-        <div class="user-welcome">Hello user</div>
-        <div class="main-content">
-            <section class="content-section">
+    <div class="add-room-modal">
+        <div class="modal-content flex">
+            <!-- Close icon -->
+            <div class="modal-title flex">
+                <h2>Add Room</h2>
+                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form class="add-room-form">
+                <div class="form-group-room-type">
+                    <input type="text" id="room-type" required placeholder="Enter existing or new room">
+                </div>
+                <div class="form-group-capacity">
+                    <label for="room-capacity">Room Capacity:</label>
+                    <select name="roomCapacity" id="room-capacity">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="form-group-bed-info">
+                    <label>Bed Information</label>
+                    <!-- King-Sized Bed -->
+                    <div class="bed-option">
+                        <input type="checkbox" id="king-sized" name="bedInfo[king]" value="King Sized">
+                        <label for="king-sized">King Sized</label>
+                        <input type="number" name="bedInfo[kingCount]" min="1" max="2" placeholder="1 - 2">
+                    </div>
+
+                    <!-- Queen-Sized Bed -->
+                    <div class="bed-option">
+                        <input type="checkbox" id="queen-sized" name="bedInfo[queen]" value="Queen Sized">
+                        <label for="queen-sized">Queen Sized</label>
+                        <input type="number" name="bedInfo[queenCount]" min="1" max="2" placeholder="1 - 2">
+                    </div>
+
+                    <!-- Single Bed -->
+                    <div class="bed-option">
+                        <input type="checkbox" id="single-bed" name="bedInfo[single]" value="Single Bed">
+                        <label for="single-bed">Single Bed</label>
+                        <input type="number" name="bedInfo[singleCount]" min="1" max="3" placeholder="1 - 3">
+                    </div>
+                </div>
+                <div class="room-info-rate">
+                    <label for="price">Price</label>
+                    <input type="number" id="price" name="price" min="0" required>
+                </div>
+                <button type="submit" class="submit-room-btn">Add Room</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <aside class="sidebar">
+            <div class="logo">Admin Dashboard</div>
+            <ul class="sidebar-links">
+                <!-- <li><button class="Dashboard">Dashboard</button></li> -->
+                <li><button class="users-btn">User</button></li>
+                <li><button class="bookings-btn">Bookings</button></li>
+                <li><button class="manage-btn">Manage Rooms</button></li>
+            </ul>
+        </aside>
+        <main>
+            <div class="user-welcome">Hello user</div>
+            <div class="main-content">
+                <!-- <section class="content-section">
                 <h2>Recent Activity</h2>
                 <table class="activity-table">
                     <thead>
@@ -36,7 +89,7 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <!-- <tbody>
+                    <tbody>
                         <tr>
                             <td>Room booked</td>
                             <td>xyz@gmail.com</td>
@@ -51,11 +104,43 @@
                             <td>Deluxe Room</td>
                             <td>Booked</td>
                         </tr>
-                    </tbody> -->
+                    </tbody>
                 </table>
-            </section>
-        </div>
-    </main>
+            </section> -->
+                <section class="content-section">
+                    <div class="table-top-section">
+                        <h2>Room Info</h2>
+                        <button class="add-room-btn">Add room <i class="fa-solid fa-plus"></i></button>
+                    </div>
+
+                    <table class="activity-table">
+                        <thead>
+                            <tr>
+                                <th>Room Id</th>
+                                <th>Room type</th>
+                                <th>Rate</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>124</td>
+                                <td>Suite</td>
+                                <td>300</td>
+                                <td><span class="status booked">Booked</span></td>
+                            </tr>
+                            <tr>
+                                <td>120</td>
+                                <td>Deluxe Room</td>
+                                <td>100</td>
+                                <td><span class="status vacant">Vacant</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </main>
+    </div>
     <script src="../assets/js/admin.js"></script>
 </body>
 
