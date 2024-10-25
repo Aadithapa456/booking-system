@@ -12,6 +12,7 @@ let errorDialogTimeoutId;
 let successDialogContainer = document.querySelector(
   ".success-dialog-container"
 );
+// Accessing the form input fields
 let closeSuccessDialogBtn = document.querySelector(".success-close-btn");
 let nameInputField = document.querySelector("#name");
 let contactInputField = document.querySelector("#contact");
@@ -23,7 +24,7 @@ let bookBtn = document.querySelector(".book-btn");
 let noOfGuestsInputField = document.querySelector("#guest-number");
 let roomPriceDisplay = document.querySelector(".price-details");
 let roomDropdownContainer = document.querySelector(".dropdown-options ul");
-// let pricing = [];
+let selectedRoom;
 //Populating the dropdown
 rooms.map((room, index) => {
   let li = document.createElement("li");
@@ -47,7 +48,7 @@ optionsContainer.forEach((option) => {
 document.addEventListener("DOMContentLoaded", () => {
   let selectedOption = document.querySelector(".selected"); // Accesing the current selected option in dropdown
   let room = JSON.parse(localStorage.getItem("rooms"));
-  let selectedRoom = room.find((currentRoom) => {
+  selectedRoom = room.find((currentRoom) => {
     return currentRoom.selected === true;
   });
   let selectedRoomPrice = selectedRoom.price;
@@ -73,15 +74,17 @@ function reservation(
   } else {
     showSuccessDialog(successDialogContainer);
   }
-  console.log({
-    Name: name.value,
-    Contact: contact.value,
-    Email: email.value,
+  let userData = {
+    name: name.value,
+    contact: contact.value,
+    email: email.value,
     checkin: checkin,
     checkout: checkout,
     "Guest Number": noOfGuestsInputField.value,
     daysStaying: daysStaying,
-  });
+    room: selectedRoom,
+  };
+  localStorage.setItem("user-info",JSON.stringify(userData))
 }
 function updatePricing() {
   let currentTime = new Date();
@@ -155,15 +158,15 @@ closeSuccessDialogBtn.addEventListener("click", () => {
 function hideSuccessDialog(successDialog) {
   successDialog.classList.add("hide");
   successDialog.classList.remove("visible");
-  resetForm();
+  // resetForm();
 }
 function resetForm() {
-  showBookingSummary(
-    nameInputField.value,
-    contactInputField.value,
-    emailInputField.value,
-    checkin
-  );
+  // showBookingSummary(
+  //   nameInputField.value,
+  //   contactInputField.value,
+  //   emailInputField.value,
+  //   checkin
+  // );
   nameInputField.value = "";
   contactInputField.value = "";
   emailInputField.value = "";
@@ -171,21 +174,19 @@ function resetForm() {
   checkoutInputField.value = "";
   roomPriceDisplay.innerHTML = "";
 }
-function showBookingSummary(name, contact, email, checkin, checkout) {
-  const summaryDialog = document.createElement("div");
-  summaryDialog.classList.add("summary-dialog");
-  summaryDialog.innerHTML = `      
-       <h2>Booking Summary</h2>
-       <p><strong>Name:</strong> ${name}</p>
-       <p><strong>Contact:</strong> ${contact}</p>
-       <p><strong>Email:</strong> ${email}</p>
-       <p><strong>Check-in Date:</strong> ${checkin}</p>
-       <p><strong>Check-out Date:</strong> ${checkout}</p>
-       <button onclick="closeSummary()">Close</button>
-   `;
-  document.body.appendChild(summaryDialog);
-}
+// function showBookingSummary(name, contact, email, checkin, checkout) {
+//   const summaryDialog = document.createElement("div");
+//   summaryDialog.classList.add("summary-dialog");
+//   summaryDialog.innerHTML = `      
+//        <h2>Booking Summary</h2>
+//        <p><strong>Name:</strong> ${name}</p>
+//        <p><strong>Contact:</strong> ${contact}</p>
+//        <p><strong>Email:</strong> ${email}</p>
+//        <p><strong>Check-in Date:</strong> ${checkin}</p>
+//        <p><strong>Check-out Date:</strong> ${checkout}</p>
+//        <button onclick="closeSummary()">Close</button>
+//    `;
+//   document.body.appendChild(summaryDialog);
+// }
 
-function addRoom(){
-   
-}
+function addRoom() {}
