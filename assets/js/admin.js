@@ -1,6 +1,8 @@
 let bookingsBtn = document.querySelector(".bookings-btn");
 let manageRoomBtn = document.querySelector(".manage-btn");
 let sectionss = document.querySelectorAll("section");
+
+// Event Listeners
 bookingsBtn.addEventListener("click", (e) => {
   sectionss[0].style.display = "block";
   sectionss[1].style.display = "none";
@@ -10,8 +12,12 @@ manageRoomBtn.addEventListener("click", () => {
   sectionss[1].style.display = "block";
   toggleModal();
 });
-bookingsBtn.addEventListener("click", showBookingsInfo);
-function showBookingsInfo() {
+bookingsBtn.addEventListener("click", updateBookingsInfo);
+manageRoomBtn.addEventListener("click", updateRoomsInfo);
+
+// Functions
+
+function updateBookingsInfo() {
   let bookingTbody = document.querySelector(".bookings-tbody");
   bookingTbody.innerHTML = ``;
   let updateTable = getUserData();
@@ -27,23 +33,37 @@ function showBookingsInfo() {
     bookingTbody.appendChild(newRow);
   });
 }
-
-manageRoomBtn.addEventListener("click", () => {
+function updateRoomsInfo() {
   let roomsTbody = document.querySelector(".manage-rooms-tbody");
   let updateTable = getUserData();
+  let roomData = getRoomData();
   roomsTbody.innerHTML = ``;
-  updateTable.forEach((newData) => {
-    const newInfoRow = document.createElement("tr");
-    newInfoRow.innerHTML = `
+  Object.entries(roomData).map(([roomId, room]) => {
+    // updateTable.forEach((newData, index) => {
+    let newData = updateTable.find((data) => data.id == roomId); // Returns object of user data whose room id matches the current room Id
+    console.log(newData);
+    if (newData) {
+      const newInfoRow = document.createElement("tr");
+      newInfoRow.innerHTML = `
     <td>${newData.id}</td>
     <td>${newData.type}</td>
     <td>${newData.rate}</td>
-    <td><span class="status booked">Booked</span></td>
+    <td><span class="status ${room.status}">${room.status}</span></td>
+    <td>
+        <button class="edit-data"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="delete-data"> <i class="fa-solid fa-trash"></i></button>
+    </td>
     `;
-    roomsTbody.appendChild(newInfoRow);
+      roomsTbody.appendChild(newInfoRow);
+    }
+
+    // });
   });
+
   toggleModal();
-});
+  addEditDeleteListeners();
+}
+
 function getElementValue(elem) {
   return document.querySelector(elem).value;
 }
@@ -101,4 +121,42 @@ function toggleModal() {
 function getUserData() {
   let userInfo = JSON.parse(localStorage.getItem("user-info"));
   return userInfo;
+}
+function addEditDeleteListeners() {
+  const editBtns = document.querySelectorAll(".edit-data");
+  const deleteBtns = document.querySelectorAll(".delete-data");
+
+  editBtns.forEach((editBtn) =>
+    editBtn.addEventListener("click", handleEditRoom)
+  );
+  deleteBtns.forEach((deleteBtn) =>
+    deleteBtn.addEventListener("click", handleDeleteRoom)
+  );
+}
+function showEditRoomModal(roomId) {
+  // let editBtn = document.querySelectorAll(".edit-data");
+  let modalEditRoom = document.querySelector(".modal-edit-room");
+  let closeModalEditRoomBtn = document.querySelector(".close-edit-modal");
+  let roomIdDisplay = document.querySelector("#roomId");
+  // let deleteBtn = document.querySelectorAll(".delete-data");
+  roomIdDisplay.value = roomId;
+  modalEditRoom.style.display = "flex";
+  closeModalEditRoomBtn.addEventListener("click", () => {
+    modalEditRoom.style.display = "none";
+  });
+}
+function handleEditRoom(event) {
+  const row = event.target.closest("tr");
+  const roomId = row.cells[0].innerHTML;
+  showEditRoomModal(roomId);
+}
+function handleDeleteRoom(event) {
+  const row = event.target.closest("tr");
+  console.log(row);
+  row.remove();
+}
+
+function getRoomData() {
+  let roomData = JSON.parse(localStorage.getItem("rooms"));
+  return roomData;
 }

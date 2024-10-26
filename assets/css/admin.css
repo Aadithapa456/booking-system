@@ -146,11 +146,11 @@ main .user-welcome {
   background-color: #ffeb3b;
   transform: scale(1.02);
 }
-.status.booked {
-  background-color: #ff7043;
+.status.Booked {
+  background-color: #FF8C00;
   color: #ffffff;
 }
-.status.vacant {
+.status.Vacant {
   background-color: #66bb6a;
   color: #ffffff;
 }
@@ -160,13 +160,12 @@ main .user-welcome {
 }
 .add-room-modal {
   /* background-color: red; */
-  top: 80px;
-  left: 40px;
   width: 100%;
   height: 100vh;
   position: fixed;
   display: none;
   justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
 }
 .modal-content {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -176,8 +175,10 @@ main .user-welcome {
   gap: 3rem;
   width: 500px;
   max-width: 550px;
-  max-height: 70%;
+  max-height: 75%;
   background-color: #f9f9fc;
+  position: absolute;
+  top: 80px;
 }
 .modal-title {
   justify-content: space-between;
@@ -261,7 +262,8 @@ main .user-welcome {
 .room-info-rate input {
   margin: 1rem 0;
 }
-.submit-room-btn {
+.submit-room-btn,
+.submit-btn {
   width: 100%;
   padding: 0.8rem;
   background-color: #007bff;
@@ -269,11 +271,85 @@ main .user-welcome {
   border-radius: 8px;
   font-size: 1.5rem;
   transition: 0.4s;
+  margin-bottom: .6rem;
 }
-.submit-room-btn:hover {
+.submit-room-btn:hover,
+.submit-btn:hover {
   background-color: #0056b3;
 }
-section{
+section {
   display: none;
-  
+}
+td button {
+  padding: 1rem 1.4rem;
+  border-radius: 6px;
+  margin: 0 0.6rem;
+  transition: 0.5s;
+}
+td button:hover {
+  transform: scale(1.06);
+}
+.delete-data {
+  color: white;
+  background-color: rgb(196, 46, 46);
+}
+/* Edit Room Modal */
+.modal-edit-room {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  align-items: center;
+}
+.edit-modal-title {
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.7rem;
+  padding: 1.2rem 1.6rem;
+}
+.edit-modal-title button {
+  padding: 1rem 1.2rem;
+  background-color: transparent;
+  font-size: 1.6rem;
+}
+.modal-content-edit {
+  background-color: #f9f9fc;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 10% auto;
+  padding: 2rem 2.5rem;
+  width: 43rem;
+  border-radius: 8px;
+  position: relative;
+}
+.modal-content-edit form {
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  margin: 1.5rem 0;
+  font-size: 1.32rem;
+}
+.modal-content-edit form input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  padding: 0.8rem;
+}
+.modal-content-edit select{
+  padding: 1rem 2.2rem;
+  border: 0;
+  outline: 0;
+}
+.modal-content-edit option{
+  line-height: 2.5;
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
 }

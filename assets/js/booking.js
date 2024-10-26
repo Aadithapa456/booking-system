@@ -1,6 +1,9 @@
 import { initializeDropdown } from "./dropdown.js";
+// import { rooms } from "./room-types.js";
+
 // Accessing the room data from localstorage
 let room = JSON.parse(localStorage.getItem("rooms"));
+
 // Accessing the selected room
 const urlParams = new URLSearchParams(window.location.search);
 const roomId = urlParams.get("roomId");
@@ -9,14 +12,17 @@ const price = urlParams.get("price");
 // REGEX
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^(98|97|96|01|02|03|04|05|06|07|08|09)\d{8}$/;
+
 // Accessing error dialog elements
 let errorDialogContainer = document.querySelector(".error-container");
 let closeErrorDialogButton = document.querySelector(".error-remove-btn");
 let errorDialogTimeoutId;
+
 // Accessing success dialog elements
 let successDialogContainer = document.querySelector(
   ".success-dialog-container"
 );
+
 // Accessing the form input fields
 let closeSuccessDialogBtn = document.querySelector(".success-close-btn");
 let nameInputField = document.querySelector("#name");
@@ -29,9 +35,9 @@ let bookBtn = document.querySelector(".book-btn");
 let noOfGuestsInputField = document.querySelector("#guest-number");
 let roomPriceDisplay = document.querySelector(".price-details");
 let roomDropdownContainer = document.querySelector(".dropdown-options ul");
-// let selectedRoom;
 let selectedRoomEntry;
 let selectedRoomId;
+
 //Populating the dropdown
 Object.entries(room).map(([roomId, room]) => {
   let li = document.createElement("li");
@@ -40,6 +46,7 @@ Object.entries(room).map(([roomId, room]) => {
   li.innerHTML = `${room.type}`;
   roomDropdownContainer.appendChild(li);
 });
+
 // Initializing the dropdown logic
 initializeDropdown(".dropdown-select-item", roomPriceDisplay);
 
@@ -59,9 +66,9 @@ document.addEventListener("DOMContentLoaded", () => {
   selectedRoomEntry = Object.entries(room).find(([id, room]) => {
     return id == roomId;
   }); // Returns the array of room data having the selected room's ID
-  selectedOption.innerHTML = selectedRoomEntry[1].type;
-  console.log(selectedRoomEntry[1]);
-  let selectedRoomPrice = price; // Directly accesses the price from url param
+  // console.log(selectedRoomEntry);
+  selectedOption.innerHTML = selectedRoomEntry[1].type; // Room data is on the 1st index of the received data
+  let selectedRoomPrice = price || "200"; // Directly accesses the price from url param
   roomPriceDisplay.innerHTML = `${selectedRoomPrice} <span>$</span>`; // Updating room price according to selected room
 });
 
@@ -96,6 +103,7 @@ function reservation(
     id: selectedRoomId,
   };
   saveUserData(userData);
+  updateLocalStorage();
 }
 function updatePricing() {
   let currentTime = new Date();
@@ -202,7 +210,14 @@ function resetForm() {
 
 // function addRoom() {}
 function saveUserData(userData) {
-  let newUserDat = JSON.parse(localStorage.getItem("user-info"));
+  let newUserDat = JSON.parse(localStorage.getItem("user-info")) || [];
   newUserDat.push(userData);
   localStorage.setItem("user-info", JSON.stringify(newUserDat));
+}
+function updateLocalStorage() {
+  let rn = Object.entries(room).find(([roomId, room]) => {
+    return room.type == document.querySelector(".selected").innerHTML;
+  });
+  rn[1].status = "Booked";
+  localStorage.setItem("rooms", JSON.stringify(room));
 }

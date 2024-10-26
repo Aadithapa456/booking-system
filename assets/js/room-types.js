@@ -5,13 +5,14 @@ export const rooms = {
     capacity: 1,
     bedInfo: "1 Queen Sized",
     price: 100,
-    status: "Pending",
+    status: "Vacant",
   },
   102: {
     type: "Deluxe Room",
     image: "assets/images/deluxe.jpg",
     capacity: 2,
     bedInfo: "1 King Sized",
+    status: "Vacant",
     price: 150,
   },
   103: {
@@ -20,7 +21,7 @@ export const rooms = {
     capacity: 2,
     bedInfo: "2 Queen Sized",
     price: 200,
-    status: "Pending",
+    status: "Vacant",
   },
   104: {
     type: "Suite",
@@ -28,7 +29,7 @@ export const rooms = {
     capacity: 3,
     bedInfo: "1 King Sized + 1 Sofa Bed",
     price: 300,
-    status: "Pending",
+    status: "Vacant",
   },
   105: {
     type: "Executive Suite",
@@ -36,7 +37,7 @@ export const rooms = {
     capacity: 4,
     bedInfo: "2 King Sized",
     price: 400,
-    status: "Pending",
+    status: "Vacant",
   },
   106: {
     type: "Family Room",
@@ -44,6 +45,6 @@ export const rooms = {
     capacity: 4,
     bedInfo: "1 King Sized + 2 Single Beds",
     price: 350,
-    status: "Pending",
+    status: "Vacant",
   },
 };

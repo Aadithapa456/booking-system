@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <!-- Add new Room Modal  -->
     <div class="add-room-modal">
         <div class="modal-content flex">
             <!-- Close icon -->
@@ -66,7 +67,33 @@
             </form>
         </div>
     </div>
+    <!-- Edit room info Modal  -->
+    <div id="editModal" class="modal-edit-room">
+        <div class="modal-content-edit">
+            <div class="edit-modal-title flex">
+                <h2>Edit Room Details</h2>
+                <button class="close-edit-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="editForm" class="flex">
+                <label for="roomId">Room ID:</label>
+                <input type="text" id="roomId" readonly>
 
+                <label for="roomType">Room Type:</label>
+                <input type="text" id="roomType">
+
+                <label for="rate">Rate:</label>
+                <input type="number" id="rate">
+
+                <label for="status">Status:</label>
+                <select name="roomStatus" id="status">
+                    <option value="Booked">Booked</option>
+                    <option value="Pending">Pending</option>
+                </select>
+
+                <button type="submit" class="submit-btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
     <div class="wrapper">
         <aside class="sidebar">
             <div class="logo">Admin Dashboard</div>
@@ -122,6 +149,7 @@
                                 <th>Room type</th>
                                 <th>Rate</th>
                                 <th>Status</th>
+                                <th>Update</th>
                             </tr>
                         </thead>
                         <tbody class="manage-rooms-tbody">
@@ -130,12 +158,24 @@
                                 <td>Suite</td>
                                 <td>300</td>
                                 <td><span class="status booked">Booked</span></td>
+                                <td>
+                                    <button class="edit-data">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button class="delete-data">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>120</td>
                                 <td>Deluxe Room</td>
                                 <td>100</td>
                                 <td><span class="status vacant">Vacant</span></td>
+                                <td>
+                                    <button class="edit-data"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="delete-data"> <i class="fa-solid fa-trash"></i></button>
+                                </td>
                             </tr> -->
                         </tbody>
                     </table>
