@@ -39,25 +39,26 @@ function updateRoomsInfo() {
   let roomData = getRoomData();
   roomsTbody.innerHTML = ``;
   Object.entries(roomData).map(([roomId, room]) => {
-    // updateTable.forEach((newData, index) => {
     let newData = updateTable.find((data) => data.id == roomId); // Returns object of user data whose room id matches the current room Id
-    console.log(newData);
+    let currentStatus;
     if (newData) {
-      const newInfoRow = document.createElement("tr");
-      newInfoRow.innerHTML = `
-    <td>${newData.id}</td>
-    <td>${newData.type}</td>
-    <td>${newData.rate}</td>
-    <td><span class="status ${room.status}">${room.status}</span></td>
+      currentStatus = "Booked";
+    } else {
+      currentStatus = "Vacant";
+    }
+    const newInfoRow = document.createElement("tr");
+    newInfoRow.innerHTML = `
+    <td>${roomId}</td>
+    <td>${room.type}</td>
+    <td>${room.price}</td>
+    <td><span class="status ${room.status}">${currentStatus}</span></td>
     <td>
         <button class="edit-data"><i class="fa-solid fa-pen-to-square"></i></button>
         <button class="delete-data"> <i class="fa-solid fa-trash"></i></button>
     </td>
     `;
-      roomsTbody.appendChild(newInfoRow);
-    }
-
-    // });
+    roomsTbody.appendChild(newInfoRow);
+    // }
   });
 
   toggleModal();
