@@ -38,21 +38,24 @@
                     <div class="bed-option">
                         <input type="checkbox" id="king-sized" name="bedInfo[king]" value="King Sized">
                         <label for="king-sized">King Sized</label>
-                        <input type="number" name="bedInfo[kingCount]" min="1" max="2" id="king-sized-count"  placeholder="1 - 2">
+                        <input type="number" name="bedInfo[kingCount]" min="1" max="2" id="king-sized-count"
+                            placeholder="1 - 2">
                     </div>
 
                     <!-- Queen-Sized Bed -->
                     <div class="bed-option">
                         <input type="checkbox" id="queen-sized" name="bedInfo[queen]" value="Queen Sized">
                         <label for="queen-sized">Queen Sized</label>
-                        <input type="number" id="queen-sized-count" name="bedInfo[queenCount]" min="1" max="2" placeholder="1 - 2">
+                        <input type="number" id="queen-sized-count" name="bedInfo[queenCount]" min="1" max="2"
+                            placeholder="1 - 2">
                     </div>
 
                     <!-- Single Bed -->
                     <div class="bed-option">
                         <input type="checkbox" id="single-sized" name="bedInfo[single]" value="Single Bed">
                         <label for="single-sized">Single Bed</label>
-                        <input type="number" id="single-sized-count" name="bedInfo[singleCount]" min="1" max="3" placeholder="1 - 3">
+                        <input type="number" id="single-sized-count" name="bedInfo[singleCount]" min="1" max="3"
+                            placeholder="1 - 3">
                     </div>
                 </div>
                 <div class="room-info-rate">
@@ -78,20 +81,35 @@
             <div class="user-welcome">Hello user</div>
             <div class="main-content">
                 <section class="content-section">
-                <h2>Recent Activity</h2>
-                <table class="activity-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Contact</th>
-                            <th>Room Booked</th>
-                            <th>Status</th>
+                    <h2>Recent Activity</h2>
+                    <table class="activity-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Room Booked</th>
+                                <!-- <th>Status</th> -->
+                                <th>Check-in Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bookings-tbody">
+                            <!-- <tr>
+                            <td>124</td>
+                            <td>Suite</td>
+                            <td>300</td>
+                            <td><span class="status booked">Booked</span></td>
                         </tr>
-                    </thead>
-                </table>
-            </section>
-                <!-- <section class="content-section">
+                        <tr>
+                            <td>120</td>
+                            <td>Deluxe Room</td>
+                            <td>100</td>
+                            <td><span class="status vacant">Vacant</span></td>
+                        </tr> -->
+                        </tbody>
+                    </table>
+                </section>
+                <section class="content-section">
                     <div class="table-top-section">
                         <h2>Room Info</h2>
                         <button class="add-room-btn">Add room <i class="fa-solid fa-plus"></i></button>
@@ -106,8 +124,8 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
+                        <tbody class="manage-rooms-tbody">
+                            <!-- <tr>
                                 <td>124</td>
                                 <td>Suite</td>
                                 <td>300</td>
@@ -118,10 +136,10 @@
                                 <td>Deluxe Room</td>
                                 <td>100</td>
                                 <td><span class="status vacant">Vacant</span></td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
-                </section> -->
+                </section>
             </div>
         </main>
     </div>

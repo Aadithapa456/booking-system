@@ -273,3 +273,7 @@ main .user-welcome {
 .submit-room-btn:hover {
   background-color: #0056b3;
 }
+section{
+  display: none;
+  
+}

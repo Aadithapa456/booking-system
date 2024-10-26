@@ -1,5 +1,10 @@
 import { initializeDropdown } from "./dropdown.js";
-import { rooms } from "./room-types.js";
+// Accessing the room data from localstorage
+let room = JSON.parse(localStorage.getItem("rooms"));
+// Accessing the selected room
+const urlParams = new URLSearchParams(window.location.search);
+const roomId = urlParams.get("roomId");
+const price = urlParams.get("price");
 
 // REGEX
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,11 +29,14 @@ let bookBtn = document.querySelector(".book-btn");
 let noOfGuestsInputField = document.querySelector("#guest-number");
 let roomPriceDisplay = document.querySelector(".price-details");
 let roomDropdownContainer = document.querySelector(".dropdown-options ul");
-let selectedRoom;
+// let selectedRoom;
+let selectedRoomEntry;
+let selectedRoomId;
 //Populating the dropdown
-rooms.map((room, index) => {
+Object.entries(room).map(([roomId, room]) => {
   let li = document.createElement("li");
   li.setAttribute("data-price", room.price);
+  li.setAttribute("room-id", roomId);
   li.innerHTML = `${room.type}`;
   roomDropdownContainer.appendChild(li);
 });
@@ -41,18 +49,19 @@ let optionsContainer = document.querySelectorAll("#option li");
 optionsContainer.forEach((option) => {
   option.addEventListener("click", () => {
     let selectedRate = option.getAttribute("data-price");
+    selectedRoomId = option.getAttribute("room-id");
     roomPriceDisplay.innerHTML = `${selectedRate} <span>$</span`;
     currentRate = selectedRate;
   });
 });
 document.addEventListener("DOMContentLoaded", () => {
   let selectedOption = document.querySelector(".selected"); // Accesing the current selected option in dropdown
-  let room = JSON.parse(localStorage.getItem("rooms"));
-  selectedRoom = room.find((currentRoom) => {
-    return currentRoom.selected === true;
-  });
-  let selectedRoomPrice = selectedRoom.price;
-  selectedOption.innerHTML = selectedRoom.type;
+  selectedRoomEntry = Object.entries(room).find(([id, room]) => {
+    return id == roomId;
+  }); // Returns the array of room data having the selected room's ID
+  selectedOption.innerHTML = selectedRoomEntry[1].type;
+  console.log(selectedRoomEntry[1]);
+  let selectedRoomPrice = price; // Directly accesses the price from url param
   roomPriceDisplay.innerHTML = `${selectedRoomPrice} <span>$</span>`; // Updating room price according to selected room
 });
 
@@ -82,9 +91,11 @@ function reservation(
     checkout: checkout,
     "Guest Number": noOfGuestsInputField.value,
     daysStaying: daysStaying,
-    room: selectedRoom,
+    type: document.querySelector(".selected").innerHTML,
+    rate: currentRate,
+    id: selectedRoomId,
   };
-  localStorage.setItem("user-info",JSON.stringify(userData))
+  saveUserData(userData);
 }
 function updatePricing() {
   let currentTime = new Date();
@@ -177,7 +188,7 @@ function resetForm() {
 // function showBookingSummary(name, contact, email, checkin, checkout) {
 //   const summaryDialog = document.createElement("div");
 //   summaryDialog.classList.add("summary-dialog");
-//   summaryDialog.innerHTML = `      
+//   summaryDialog.innerHTML = `
 //        <h2>Booking Summary</h2>
 //        <p><strong>Name:</strong> ${name}</p>
 //        <p><strong>Contact:</strong> ${contact}</p>
@@ -189,4 +200,9 @@ function resetForm() {
 //   document.body.appendChild(summaryDialog);
 // }
 
-function addRoom() {}
+// function addRoom() {}
+function saveUserData(userData) {
+  let newUserDat = JSON.parse(localStorage.getItem("user-info"));
+  newUserDat.push(userData);
+  localStorage.setItem("user-info", JSON.stringify(newUserDat));
+}
