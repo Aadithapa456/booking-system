@@ -215,9 +215,9 @@ function saveUserData(userData) {
   localStorage.setItem("user-info", JSON.stringify(newUserDat));
 }
 function updateLocalStorage() {
-  let rn = Object.entries(room).find(([roomId, room]) => {
+  let updatedRoomData = Object.entries(room).find(([roomId, room]) => {
     return room.type == document.querySelector(".selected").innerHTML;
   });
-  rn[1].status = "Booked";
+  updatedRoomData[1].status = "Booked";
   localStorage.setItem("rooms", JSON.stringify(room));
 }
