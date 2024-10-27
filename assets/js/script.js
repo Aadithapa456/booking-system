@@ -5,7 +5,7 @@ let roomCardContainer = document.querySelector(".room-card-area");
 let timeout;
 // rooms[0].type = "Standard Room";
 updateLocalStorage(rooms);
-let roomsData = JSON.parse(localStorage.getItem("rooms"));
+let roomsData = JSON.parse(localStorage.getItem("rooms")) || rooms;
 let newRooms = Object.entries(roomsData).map(([roomId, room]) => {
   const newRoomCard = document.createElement("div");
   newRoomCard.classList.add("room-card");
@@ -35,11 +35,13 @@ let roomCards = document.querySelectorAll(".room-card");
 let reserveButtons = document.querySelectorAll(".room-reserve-btn button");
 reserveButtons.forEach((button, index) => {
   button.addEventListener("click", () => {
-    const roomNumber = Object.keys(rooms)[index];
-    const price = rooms[roomNumber].price;
+    const roomNumber = Object.keys(roomsData)[index];
+    const price = roomsData[roomNumber].price;
+    console.log(price);
     redirectToBooking(roomNumber, price);
   });
 });
+// Search functionality
 let userInput = document.querySelector("#search-room");
 userInput.addEventListener("input", (e) => {
   clearTimeout(timeout);
@@ -55,7 +57,8 @@ userInput.addEventListener("input", (e) => {
 });
 initializeDropdown(".dropdown-select-item");
 function updateLocalStorage(rooms) {
-  localStorage.setItem("rooms", JSON.stringify(rooms));
+  let currentLocalStorageData = JSON.parse(localStorage.getItem("rooms")) || rooms;
+  localStorage.setItem("rooms", JSON.stringify(currentLocalStorageData));
 }
 function redirectToBooking(roomNumber, price) {
   const url = `components/booking.html?roomId=${roomNumber}&price=${price}`;

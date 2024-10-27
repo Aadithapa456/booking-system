@@ -1,7 +1,7 @@
 let bookingsBtn = document.querySelector(".bookings-btn");
 let manageRoomBtn = document.querySelector(".manage-btn");
 let sectionss = document.querySelectorAll("section");
-
+let newRoomId = 106;
 // Event Listeners
 bookingsBtn.addEventListener("click", (e) => {
   sectionss[0].style.display = "block";
@@ -10,20 +10,21 @@ bookingsBtn.addEventListener("click", (e) => {
 manageRoomBtn.addEventListener("click", () => {
   sectionss[0].style.display = "none";
   sectionss[1].style.display = "block";
-  toggleModal();
 });
+
+document.addEventListener("DOMContentLoaded", updateBookingsInfo); // Since bookings tab is default
 bookingsBtn.addEventListener("click", updateBookingsInfo);
 manageRoomBtn.addEventListener("click", updateRoomsInfo);
 
 // Functions
-
 function updateBookingsInfo() {
   let bookingTbody = document.querySelector(".bookings-tbody");
   bookingTbody.innerHTML = ``;
   let updateTable = getUserData();
-  updateTable.forEach((newData) => {
+  updateTable.forEach((newData, index) => {
     const newRow = document.createElement("tr");
     newRow.innerHTML = `
+    <td>${index + 1}</td>
     <td>${newData.name}</td>
     <td>${newData.email}</td>
     <td>${newData.contact}</td>
@@ -40,18 +41,21 @@ function updateRoomsInfo() {
   roomsTbody.innerHTML = ``;
   Object.entries(roomData).map(([roomId, room]) => {
     let newData = updateTable.find((data) => data.id == roomId); // Returns object of user data whose room id matches the current room Id
-    let currentStatus;
+    console.log(newData);
+    let roomAvailableDate;
+    let currentStatus = room.status; // Exctracts the room status of current room
     if (newData) {
-      currentStatus = "Booked";
+      roomAvailableDate = new Date(newData.checkout).toLocaleDateString();
     } else {
-      currentStatus = "Vacant";
+      roomAvailableDate = "    - ";
     }
     const newInfoRow = document.createElement("tr");
     newInfoRow.innerHTML = `
     <td>${roomId}</td>
     <td>${room.type}</td>
     <td>${room.price}</td>
-    <td><span class="status ${room.status}">${currentStatus}</span></td>
+    <td><span class="status ${currentStatus}">${currentStatus}</span></td>
+    <td >${roomAvailableDate}</td>
     <td>
         <button class="edit-data"><i class="fa-solid fa-pen-to-square"></i></button>
         <button class="delete-data"> <i class="fa-solid fa-trash"></i></button>
@@ -74,6 +78,7 @@ function getElementValue(elem) {
 function toggleModal() {
   let modalContainer = document.querySelector(".add-room-modal");
   let newRoomInputField = document.querySelector("#room-type");
+  let roomImageInputField = document.querySelector("#room-img");
   let roomCapacityInputField = document.querySelector("#room-capacity");
   let kingSizedCheckbox = document.querySelector("#king-sized");
   let kingSizedCountInputField = document.querySelector("#king-sized-count");
@@ -88,26 +93,19 @@ function toggleModal() {
   let closeModalBtn = document.querySelector(".close-modal");
   submitRoomBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    const roomDetails = {
-      roomType: newRoomInputField.value,
-      roomCapacity: roomCapacityInputField.value,
-      kingSized: {
-        selected: kingSizedCheckbox.checked,
-        count: kingSizedCountInputField.value,
-      },
-      queenSized: {
-        selected: queenSizedCheckbox.checked,
-        count: queenSizedCountInputField.value,
-      },
-      singleSized: {
-        selected: singleSizedCheckbox.checked,
-        count: singleSizedCountInputField.value,
-      },
-      price: roomRateInputField.value,
-    };
-
-    // Log the room details object to the console
-    console.log(roomDetails);
+    addNewRoom(
+      newRoomInputField.value,
+      roomImageInputField.value,
+      roomCapacityInputField.value,
+      kingSizedCheckbox.checked,
+      kingSizedCountInputField.value,
+      queenSizedCheckbox.checked,
+      queenSizedCountInputField.value,
+      singleSizedCheckbox.checked,
+      singleSizedCountInputField.value,
+      roomRateInputField.value,
+      newRoomId
+    );
   });
 
   let addRoomBtn = document.querySelector(".add-room-btn");
@@ -118,6 +116,7 @@ function toggleModal() {
   closeModalBtn.addEventListener("click", () => {
     modalContainer.style.display = "none";
   });
+  newRoomId++;
 }
 function getUserData() {
   let userInfo = JSON.parse(localStorage.getItem("user-info"));
@@ -134,21 +133,25 @@ function addEditDeleteListeners() {
     deleteBtn.addEventListener("click", handleDeleteRoom)
   );
 }
-function showEditRoomModal(roomId) {
-  // let editBtn = document.querySelectorAll(".edit-data");
-  let modalEditRoom = document.querySelector(".modal-edit-room");
-  let closeModalEditRoomBtn = document.querySelector(".close-edit-modal");
-  let roomIdDisplay = document.querySelector("#roomId");
-  // let deleteBtn = document.querySelectorAll(".delete-data");
-  roomIdDisplay.value = roomId;
-  modalEditRoom.style.display = "flex";
-  closeModalEditRoomBtn.addEventListener("click", () => {
-    modalEditRoom.style.display = "none";
-  });
-}
 function handleEditRoom(event) {
   const row = event.target.closest("tr");
   const roomId = row.cells[0].innerHTML;
+  let editRateInputField = document.querySelector("#rate");
+  let editStatusInputField = document.querySelector("#status");
+  let currentData = getRoomData();
+  // Extracts the room-data which matches the room-data of the button of the row
+  let requiredData = Object.entries(currentData).find(
+    ([Id, room]) => roomId == Id
+  );
+  let submitBtn = document.querySelector(".submit-btn");
+  submitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    //Edits the room-data in localstorage
+    requiredData[1].status = editStatusInputField.value;
+    requiredData[1].price = Number(editRateInputField.value);
+    updateLocalStorageData(currentData);
+    console.log(requiredData);
+  });
   showEditRoomModal(roomId);
 }
 function handleDeleteRoom(event) {
@@ -156,8 +159,59 @@ function handleDeleteRoom(event) {
   console.log(row);
   row.remove();
 }
+function showEditRoomModal(roomId) {
+  // let editBtn = document.querySelectorAll(".edit-data");
+  let modalEditRoom = document.querySelector(".modal-edit-room");
+  let closeModalEditRoomBtn = document.querySelector(".close-edit-modal");
+  let roomIdDisplay = document.querySelector("#roomId");
+  modalEditRoom.style.display = "flex";
+  roomIdDisplay.value = roomId;
+  closeModalEditRoomBtn.addEventListener("click", () => {
+    modalEditRoom.style.display = "none";
+  });
+}
 
 function getRoomData() {
   let roomData = JSON.parse(localStorage.getItem("rooms"));
   return roomData;
+}
+function updateLocalStorageData(roomData) {
+  let newRoomData = localStorage.setItem("rooms", JSON.stringify(roomData));
+}
+function addNewRoom(
+  newRoom,
+  newRoomImg,
+  newRoomCapacity,
+  isKingSizedAvailable,
+  kingSizedCount,
+  isQueenSizedAvailable,
+  queenSizedCount,
+  isSingleSizedAvailable,
+  singleSizedCount,
+  newRoomRate,
+  newRoomId
+) {
+  let currentRoomData = getRoomData();
+  let bedInfoArr = [];
+  if (isKingSizedAvailable) {
+    bedInfoArr.push(`${kingSizedCount} King Sized`);
+  }
+  if (isQueenSizedAvailable) {
+    bedInfoArr.push(`${queenSizedCount} Queen Sized`);
+  }
+  if (isSingleSizedAvailable) {
+    bedInfoArr.push(`${singleSizedCount} Single Bed`);
+  }
+  let newData = {
+    [newRoomId]: {
+      type: newRoom,
+      image: newRoomImg,
+      capacity: newRoomCapacity,
+      price: Number(newRoomRate),
+      bedInfo: bedInfoArr.join("+"),
+      status: "Vacant",
+    },
+  };
+  const updatedData = { ...currentRoomData, ...newData };
+  updateLocalStorageData(updatedData);
 }

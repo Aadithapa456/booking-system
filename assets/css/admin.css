@@ -93,7 +93,7 @@ main .user-welcome {
 .activity-table th,
 .activity-table td {
   padding: 1.8rem;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #dfe4ea;
 }
 .activity-table tbody {
@@ -121,7 +121,6 @@ main .user-welcome {
   outline: 0;
   display: flex;
   background: linear-gradient(135deg, #62a362, #47a947);
-  transition: 0.4s;
   color: #ffffff;
   gap: 8px;
   align-items: center;
@@ -147,7 +146,7 @@ main .user-welcome {
   transform: scale(1.02);
 }
 .status.Booked {
-  background-color: #FF8C00;
+  background-color: #ff8c00;
   color: #ffffff;
 }
 .status.Vacant {
@@ -158,6 +157,8 @@ main .user-welcome {
   background-color: #fff59d;
   color: #3a3a3a;
 }
+
+/* Add new room Modal  */
 .add-room-modal {
   /* background-color: red; */
   width: 100%;
@@ -175,10 +176,11 @@ main .user-welcome {
   gap: 3rem;
   width: 500px;
   max-width: 550px;
-  max-height: 75%;
+  max-height: 77%;
   background-color: #f9f9fc;
   position: absolute;
   top: 80px;
+  border-radius: 8px;
 }
 .modal-title {
   justify-content: space-between;
@@ -203,6 +205,10 @@ main .user-welcome {
 }
 .add-room-form input[type="text"]::placeholder {
   color: #999;
+}
+.form-group-room-type {
+  flex-direction: column;
+  gap: 2rem;
 }
 .form-group-capacity {
   margin: 1.5rem 0;
@@ -252,7 +258,6 @@ main .user-welcome {
   min-width: 100px;
 }
 .room-info-rate {
-  /* background-color: green; */
   padding: 1.2rem 0;
 }
 .room-info-rate label {
@@ -271,13 +276,17 @@ main .user-welcome {
   border-radius: 8px;
   font-size: 1.5rem;
   transition: 0.4s;
-  margin-bottom: .6rem;
+  margin-bottom: 0.6rem;
 }
 .submit-room-btn:hover,
 .submit-btn:hover {
   background-color: #0056b3;
 }
-section {
+/* Manage room buttons styling */
+/* section {
+  display: none;
+} */
+.room-section{
   display: none;
 }
 td button {
@@ -338,12 +347,12 @@ td button:hover {
   width: 100%;
   padding: 0.8rem;
 }
-.modal-content-edit select{
+.modal-content-edit select {
   padding: 1rem 2.2rem;
   border: 0;
   outline: 0;
 }
-.modal-content-edit option{
+.modal-content-edit option {
   line-height: 2.5;
 }
 .close-btn {

@@ -20,8 +20,9 @@
                 <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form class="add-room-form">
-                <div class="form-group-room-type">
-                    <input type="text" id="room-type" required placeholder="Enter existing or new room">
+                <div class="form-group-room-type flex">
+                    <input type="text" id="room-type" required placeholder="Enter name of the room">
+                    <input type="text" id="room-img" required placeholder="URL of room image">
                 </div>
                 <div class="form-group-capacity">
                     <label for="room-capacity">Room Capacity:</label>
@@ -77,9 +78,8 @@
             <form id="editForm" class="flex">
                 <label for="roomId">Room ID:</label>
                 <input type="text" id="roomId" readonly>
-
-                <label for="roomType">Room Type:</label>
-                <input type="text" id="roomType">
+                <!-- <label for="roomType">Room Type:</label>
+                <input type="text" id="roomType"> -->
 
                 <label for="rate">Rate:</label>
                 <input type="number" id="rate">
@@ -87,7 +87,7 @@
                 <label for="status">Status:</label>
                 <select name="roomStatus" id="status">
                     <option value="Booked">Booked</option>
-                    <option value="Pending">Pending</option>
+                    <option value="Vacant">Vacant</option>
                 </select>
 
                 <button type="submit" class="submit-btn">Save Changes</button>
@@ -107,11 +107,12 @@
         <main>
             <div class="user-welcome">Hello user</div>
             <div class="main-content">
-                <section class="content-section">
+                <section class="content-section booking-section">
                     <h2>Recent Activity</h2>
                     <table class="activity-table">
                         <thead>
                             <tr>
+                                <th>S.N</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Contact</th>
@@ -136,7 +137,7 @@
                         </tbody>
                     </table>
                 </section>
-                <section class="content-section">
+                <section class="content-section room-section">
                     <div class="table-top-section">
                         <h2>Room Info</h2>
                         <button class="add-room-btn">Add room <i class="fa-solid fa-plus"></i></button>
@@ -149,6 +150,7 @@
                                 <th>Room type</th>
                                 <th>Rate</th>
                                 <th>Status</th>
+                                <th>Available From</th>
                                 <th>Update</th>
                             </tr>
                         </thead>
