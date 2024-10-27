@@ -57,10 +57,11 @@ userInput.addEventListener("input", (e) => {
 });
 initializeDropdown(".dropdown-select-item");
 function updateLocalStorage(rooms) {
-  let currentLocalStorageData = JSON.parse(localStorage.getItem("rooms")) || rooms;
+  let currentLocalStorageData =
+    JSON.parse(localStorage.getItem("rooms")) || rooms;
   localStorage.setItem("rooms", JSON.stringify(currentLocalStorageData));
 }
 function redirectToBooking(roomNumber, price) {
-  const url = `components/booking.html?roomId=${roomNumber}&price=${price}`;
+  const url = `components/booking.html?roomId=${roomNumber}`;
   window.location.href = url;
 }

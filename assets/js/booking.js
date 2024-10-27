@@ -7,7 +7,6 @@ let room = JSON.parse(localStorage.getItem("rooms"));
 // Accessing the selected room
 const urlParams = new URLSearchParams(window.location.search);
 const roomId = urlParams.get("roomId");
-const price = urlParams.get("price");
 
 // REGEX
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -66,9 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
   selectedRoomEntry = Object.entries(room).find(([id, room]) => {
     return id == roomId;
   }); // Returns the array of room data having the selected room's ID
-  // console.log(selectedRoomEntry);
+  console.log(selectedRoomEntry);
   selectedOption.innerHTML = selectedRoomEntry[1].type; // Room data is on the 1st index of the received data
-  let selectedRoomPrice = price || "200"; // Directly accesses the price from url param
+  let selectedRoomPrice = selectedRoomEntry[1].price || "200"; // Directly accesses the price from url param
   roomPriceDisplay.innerHTML = `${selectedRoomPrice} <span>$</span>`; // Updating room price according to selected room
 });
 
