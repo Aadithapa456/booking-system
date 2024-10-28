@@ -1,0 +1,25 @@
+<div id="editModal" class="modal-edit-room">
+    <div class="modal-content-edit">
+        <div class="edit-modal-title flex">
+            <h2>Edit Room Details</h2>
+            <button class="close-edit-modal"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form id="editForm" class="flex">
+            <label for="roomId">Room ID:</label>
+            <input type="text" id="roomId" readonly>
+            <!-- <label for="roomType">Room Type:</label>
+            <input type="text" id="roomType"> -->
+
+            <label for="rate">Rate:</label>
+            <input type="number" id="rate">
+
+            <label for="status">Status:</label>
+            <select name="roomStatus" id="status">
+                <option value="Booked">Booked</option>
+                <option value="Vacant">Vacant</option>
+            </select>
+
+            <button type="submit" class="submit-btn">Save Changes</button>
+        </form>
+    </div>
+</div>

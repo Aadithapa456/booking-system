@@ -1,7 +1,9 @@
+import { getUserData, getRoomData } from "./fetch-localstorage.js";
 let bookingsBtn = document.querySelector(".bookings-btn");
 let manageRoomBtn = document.querySelector(".manage-btn");
 let sectionss = document.querySelectorAll("section");
-let newRoomId = 106;
+let updateTable = getUserData();
+let roomData = getRoomData();
 // Event Listeners
 bookingsBtn.addEventListener("click", (e) => {
   sectionss[0].style.display = "block";
@@ -11,16 +13,41 @@ manageRoomBtn.addEventListener("click", () => {
   sectionss[0].style.display = "none";
   sectionss[1].style.display = "block";
 });
-
-document.addEventListener("DOMContentLoaded", updateBookingsInfo); // Since bookings tab is default
-bookingsBtn.addEventListener("click", updateBookingsInfo);
-manageRoomBtn.addEventListener("click", updateRoomsInfo);
-
+document.addEventListener("roomAdded", (event) => {
+  const roomData = event.detail;
+  addNewRoom(
+    roomData.roomType,
+    roomData.imageUrl,
+    roomData.capacity,
+    roomData.isKingSized,
+    roomData.kingSizedCount,
+    roomData.isQueenSized,
+    roomData.queenSizedCount,
+    roomData.isSingleSized,
+    roomData.singleSizedCount,
+    roomData.rate,
+    roomData.id
+  );
+});
+// document.addEventListener(
+//   "DOMContentLoaded",
+//   updateRoomsInfo,
+//   updateBookingsInfo
+// );
+document.addEventListener("DOMContentLoaded", () => {
+  updateBookingsInfo();
+  updateRoomsInfo();
+});
 // Functions
 function updateBookingsInfo() {
   let bookingTbody = document.querySelector(".bookings-tbody");
   bookingTbody.innerHTML = ``;
+  // setInterval(() => {
+  //   updateTable = getUserData();
+  //   roomData = getRoomData();
+  // }, 400);
   let updateTable = getUserData();
+  let roomData = getRoomData();
   updateTable.forEach((newData, index) => {
     const newRow = document.createElement("tr");
     newRow.innerHTML = `
@@ -37,7 +64,10 @@ function updateBookingsInfo() {
 function updateRoomsInfo() {
   let roomsTbody = document.querySelector(".manage-rooms-tbody");
   let updateTable = getUserData();
-  let roomData = getRoomData();
+  // setInterval(() => {
+  //   updateTable = getUserData();
+  //   roomData = getRoomData();
+  // }, 400);
   roomsTbody.innerHTML = ``;
   Object.entries(roomData).map(([roomId, room]) => {
     let newData = updateTable.find((data) => data.id == roomId); // Returns object of user data whose room id matches the current room Id
@@ -63,127 +93,17 @@ function updateRoomsInfo() {
     roomsTbody.appendChild(newInfoRow);
     // }
   });
-
-  toggleModal();
-  addEditDeleteListeners();
 }
 
 function getElementValue(elem) {
   return document.querySelector(elem).value;
 }
 
-// Accessing Modal elements
-
-function toggleModal() {
-  let modalContainer = document.querySelector(".add-room-modal");
-  let newRoomInputField = document.querySelector("#room-type");
-  let roomImageInputField = document.querySelector("#room-img");
-  let roomCapacityInputField = document.querySelector("#room-capacity");
-  let kingSizedCheckbox = document.querySelector("#king-sized");
-  let kingSizedCountInputField = document.querySelector("#king-sized-count");
-  let queenSizedCheckbox = document.querySelector("#queen-sized");
-  let queenSizedCountInputField = document.querySelector("#queen-sized-count");
-  let singleSizedCheckbox = document.querySelector("#single-sized");
-  let singleSizedCountInputField = document.querySelector(
-    "#single-sized-count"
-  );
-  let roomRateInputField = document.querySelector("#price");
-  let submitRoomBtn = document.querySelector(".submit-room-btn");
-  let closeModalBtn = document.querySelector(".close-modal");
-  submitRoomBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    addNewRoom(
-      newRoomInputField.value,
-      roomImageInputField.value,
-      roomCapacityInputField.value,
-      kingSizedCheckbox.checked,
-      kingSizedCountInputField.value,
-      queenSizedCheckbox.checked,
-      queenSizedCountInputField.value,
-      singleSizedCheckbox.checked,
-      singleSizedCountInputField.value,
-      roomRateInputField.value,
-      newRoomId
-    );
-  });
-
-  let addRoomBtn = document.querySelector(".add-room-btn");
-  addRoomBtn.addEventListener("click", () => {
-    // modalContainer.classList.add("fade-in")
-    modalContainer.style.display = "flex";
-  });
-  closeModalBtn.addEventListener("click", () => {
-    modalContainer.style.display = "none";
-  });
-  newRoomId++;
-}
-function getUserData() {
-  let userInfo = JSON.parse(localStorage.getItem("user-info"));
-  return userInfo;
-}
-function addEditDeleteListeners() {
-  const editBtns = document.querySelectorAll(".edit-data");
-  const deleteBtns = document.querySelectorAll(".delete-data");
-
-  editBtns.forEach((editBtn) =>
-    editBtn.addEventListener("click", handleEditRoom)
-  );
-  deleteBtns.forEach((deleteBtn) =>
-    deleteBtn.addEventListener("click", handleDeleteRoom)
-  );
-}
-function handleEditRoom(event) {
-  const row = event.target.closest("tr");
-  const roomId = row.cells[0].innerHTML;
-  let editRateInputField = document.querySelector("#rate");
-  let editStatusInputField = document.querySelector("#status");
-  let currentData = getRoomData();
-  // Extracts the room-data which matches the room-data of the button of the row
-  let requiredData = Object.entries(currentData).find(
-    ([Id, room]) => roomId == Id
-  );
-  let submitBtn = document.querySelector(".submit-btn");
-  submitBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    //Edits the room-data in localstorage
-    requiredData[1].status = editStatusInputField.value;
-    requiredData[1].price = Number(editRateInputField.value);
-    updateLocalStorageData(currentData);
-    console.log(requiredData);
-  });
-  showEditRoomModal(roomId);
-}
-function handleDeleteRoom(event) {
-  const row = event.target.closest("tr");
-  const roomId = row.cells[0].innerHTML;
-  let currentData = getRoomData();
-  delete currentData[roomId]; // Deletes the data of the roomId corresponding to the selected row
-  updateLocalStorageData(currentData);
-  row.remove();
-}
-function showEditRoomModal(roomId) {
-  // let editBtn = document.querySelectorAll(".edit-data");
-  let modalEditRoom = document.querySelector(".modal-edit-room");
-  let closeModalEditRoomBtn = document.querySelector(".close-edit-modal");
-  let roomIdDisplay = document.querySelector("#roomId");
-  modalEditRoom.style.display = "flex";
-  roomIdDisplay.value = roomId;
-  closeModalEditRoomBtn.addEventListener("click", () => {
-    hideEditRoomModal(modalEditRoom);
-  });
-}
-function hideEditRoomModal(modalEditRoom) {
-  modalEditRoom.style.display = "none";
-}
-function getRoomData() {
-  let roomData = JSON.parse(localStorage.getItem("rooms"));
-  return roomData;
-}
 function updateLocalStorageData(roomData) {
   let newRoomData = localStorage.setItem("rooms", JSON.stringify(roomData));
 }
 function addNewRoom(
-  newRoom,
+  newRoomType,
   newRoomImg,
   newRoomCapacity,
   isKingSizedAvailable,
@@ -208,7 +128,7 @@ function addNewRoom(
   }
   let newData = {
     [newRoomId]: {
-      type: newRoom,
+      type: newRoomType,
       image: newRoomImg,
       capacity: newRoomCapacity,
       price: Number(newRoomRate),
