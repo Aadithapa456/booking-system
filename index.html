@@ -13,21 +13,15 @@
     <script src="https://kit.fontawesome.com/bed699dc9b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <!-- <script>
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-placeholder').innerHTML = data;
-            })
-            .catch(err => console.error('Error loading header:', err));
-    </script> -->
-    
 </head>
 
 <body>
-    <header>
+    <div class="header-placeholder">
+
+    </div>
+    <!-- <header>
         <div class="header-text">Hotel XYZ</div>
-    </header>
+    </header> -->
     <!-- <div id="header-placeholder"></div> -->
     <main>
         <div class="search-area">
@@ -52,19 +46,30 @@
             <!-- <div class="room-card">
                 <img src="https://media.istockphoto.com/id/627892060/photo/hotel-room-suite-with-view.jpg?s=612x612&w=0&k=20&c=YBwxnGH3MkOLLpBKCvWAD8F__T-ypznRUJ_N13Zb1cU="
                     alt="Room Image" class="room-img">
-                <div class="room-type">Premium Deluxe</div>
-                <div class="room-info">
-                    <div class="people-info"><i class="fa-solid fa-person"></i> 1 Person</div>
-                    <div class="separator"></div>
-                    <div class="bed-info">2 Queen Sized</div>
+                <div class="main-room-content">
+                    <div class="ratings"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-regular fa-star"></i>
+                    </div>
+                    <div class="room-type">Premium Deluxe</div>
+                    <div class="price-info">
+                        500$ <span class="night-info">/night</span>
+                    </div>
+                    <div class="room-labels">
+                        1 Person
+                    </div>
+                    <div class="bed-info">
+                        <ul>
+                            <li><i class="fa-solid fa-bed"></i> 1 King-Sized Bed</li>
+                            <li><i class="fa-solid fa-bed"></i> 2 Queen-Sized Beds</li>
+                        </ul>
+                    </div>
+
+                    <div class="room-reserve-btn">
+                        <button class="reserve-btn">Reserve Now</button>
+                    </div>
                 </div>
-                <div class="price-info">
-                    500$ <span class="night-info">/night</span>
-                </div>
-                <div class="room-reserve-btn">
-                    <button class="reserve-btn">Reserve Now</button>
-                </div> -->
-            </div>
+            </div> -->
         </div>
     </main>
     <script src="assets/js/script.js" type="module"></script>

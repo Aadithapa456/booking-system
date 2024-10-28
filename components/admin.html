@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../assets/css/admin.css">
     <script src="https://kit.fontawesome.com/bed699dc9b.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <!-- Add new Room Modal  -->
     <div class="add-room-modal-placeholder"></div>
@@ -106,6 +107,24 @@
             </div>
         </main>
     </div>
+    <div class="delete-dialog-wrapper">
+        <div class="delete-dialog-container">
+            <div class="delete-card-content">
+                <div class="delete-card-heading flex">
+                    <div class="delete-card-title">Are you Sure?</div>
+                    <button class="exit-button">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <p class="delete-card-description">This action will remove the room from database</p>
+            </div>
+            <div class="delete-card-button-wrapper">
+                <button class="delete-card-button cancel-delete-btn secondary">Cancel</button>
+                <button class="delete-card-button delete-room-btn primary">Delete</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../assets/js/admin.js" type="module"></script>
     <script src="../assets/js/modals.js" type="module"></script>
     <script src="../assets/js/fetch-localstorage.js" type="module"></script>

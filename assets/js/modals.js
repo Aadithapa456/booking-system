@@ -1,4 +1,8 @@
-import { getUserData, getRoomData } from "./fetch-localstorage.js";
+import {
+  getUserData,
+  getRoomData,
+  updateLocalStorageData,
+} from "./fetch-localstorage.js";
 
 // Dynamically adding add room modal component in DOM
 fetch("add-room-modal.html")
@@ -13,12 +17,12 @@ fetch("edit-room-modal.html")
     document.querySelector(".edit-room-modal-placeholder").innerHTML = data;
     addEditDeleteListeners();
   });
-let newRoomId = 106;
 
-// Accessing Modal elements
+// Accessing Add Room Modal elements
 function initializeModal() {
   let modalContainer = document.querySelector(".add-room-modal");
-  let newRoomInputField = document.querySelector("#room-type");
+  let newRoomIdInputField = document.querySelector("#room-id");
+  let newRoomTypeInputField = document.querySelector("#room-type");
   let roomImageInputField = document.querySelector("#room-img");
   let roomCapacityInputField = document.querySelector("#room-capacity");
   let kingSizedCheckbox = document.querySelector("#king-sized");
@@ -35,7 +39,7 @@ function initializeModal() {
   submitRoomBtn.addEventListener("click", (event) => {
     event.preventDefault();
     const ROOM_DATA = {
-      roomType: newRoomInputField.value,
+      roomType: newRoomTypeInputField.value,
       imageUrl: roomImageInputField.value,
       capacity: roomCapacityInputField.value,
       isKingSized: kingSizedCheckbox.checked,
@@ -45,7 +49,7 @@ function initializeModal() {
       isSingleSized: singleSizedCheckbox.checked,
       singleSizedCount: singleSizedCountInputField.value,
       rate: roomRateInputField.value,
-      id: newRoomId,
+      id: newRoomIdInputField.value,
     };
     const submitEvent = new CustomEvent("roomAdded", { detail: ROOM_DATA });
     document.dispatchEvent(submitEvent);
@@ -60,7 +64,6 @@ function initializeModal() {
   closeModalBtn.addEventListener("click", () => {
     modalContainer.style.display = "none";
   });
-  newRoomId++;
 }
 function addEditDeleteListeners() {
   const editBtns = document.querySelectorAll(".edit-data");
@@ -87,30 +90,33 @@ function handleEditRoom(event) {
   let requiredData = Object.entries(currentData).find(
     ([Id, room]) => roomId == Id
   );
-  let submitBtn = document.querySelector(".submit-btn");
-  submitBtn.addEventListener("click", (e) => {
+  let submitEditedRoomBtn = document.querySelector(".submit-btn");
+  submitEditedRoomBtn.addEventListener("click", (e) => {
     e.preventDefault();
     //Edits the room-data in localstorage
     requiredData[1].status = editStatusInputField.value;
     requiredData[1].price = Number(editRateInputField.value);
     updateLocalStorageData(currentData);
-    console.log(requiredData);
   });
   showEditRoomModal(roomId);
-}
-function handleDeleteRoom(event) {
-  const row = event.target.closest("tr");
-  const roomId = row.cells[0].innerHTML;
-  let currentData = getRoomData();
-  delete currentData[roomId]; // Deletes the data of the roomId corresponding to the selected row
-  updateLocalStorageData(currentData);
-  row.remove();
 }
 function showEditRoomModal(roomId) {
   let modalEditRoom = document.querySelector(".modal-edit-room");
   let roomIdDisplay = document.querySelector("#roomId");
   modalEditRoom.style.display = "flex";
   roomIdDisplay.value = roomId;
+}
+function handleDeleteRoom(event) {
+  const row = event.target.closest("tr");
+  const roomId = row.cells[0].innerHTML;
+  // let currentData = getRoomData();
+  // delete currentData[roomId]; // Deletes the data of the roomId corresponding to the selected row
+  // updateLocalStorageData(currentData);
+  // row.remove();
+  const DELETE_EVENT = new CustomEvent("roomDeleted", {
+    detail: { roomId, row },
+  });
+  document.dispatchEvent(DELETE_EVENT);
 }
 
 function hideEditRoomModal() {

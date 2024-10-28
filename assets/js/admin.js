@@ -1,4 +1,9 @@
-import { getUserData, getRoomData } from "./fetch-localstorage.js";
+import {
+  getUserData,
+  getRoomData,
+  updateLocalStorageData,
+} from "./fetch-localstorage.js";
+
 let bookingsBtn = document.querySelector(".bookings-btn");
 let manageRoomBtn = document.querySelector(".manage-btn");
 let sectionss = document.querySelectorAll("section");
@@ -29,6 +34,9 @@ document.addEventListener("roomAdded", (event) => {
     roomData.id
   );
 });
+document.addEventListener("roomDeleted", (event) => {
+  deleteDialog(event.detail.roomId, event.detail.row);
+});
 // document.addEventListener(
 //   "DOMContentLoaded",
 //   updateRoomsInfo,
@@ -38,46 +46,49 @@ document.addEventListener("DOMContentLoaded", () => {
   updateBookingsInfo();
   updateRoomsInfo();
 });
+
 // Functions
 function updateBookingsInfo() {
   let bookingTbody = document.querySelector(".bookings-tbody");
   bookingTbody.innerHTML = ``;
   // setInterval(() => {
-  //   updateTable = getUserData();
-  //   roomData = getRoomData();
+  updateTable = getUserData();
+  roomData = getRoomData();
   // }, 400);
-  let updateTable = getUserData();
-  let roomData = getRoomData();
-  updateTable.forEach((newData, index) => {
+  // let updateTable = getUserData();
+  // let roomData = getRoomData();
+  updateTable.forEach((newBookingData, index) => {
     const newRow = document.createElement("tr");
     newRow.innerHTML = `
     <td>${index + 1}</td>
-    <td>${newData.name}</td>
-    <td>${newData.email}</td>
-    <td>${newData.contact}</td>
-    <td>${newData.type}</td>
-    <td>${new Date(newData.checkin).toLocaleDateString()}</td>
+    <td>${newBookingData.name}</td>
+    <td>${newBookingData.email}</td>
+    <td>${newBookingData.contact}</td>
+    <td>${newBookingData.type}</td>
+    <td>${new Date(newBookingData.checkin).toLocaleDateString()}</td>
     `;
     bookingTbody.appendChild(newRow);
   });
 }
 function updateRoomsInfo() {
   let roomsTbody = document.querySelector(".manage-rooms-tbody");
-  let updateTable = getUserData();
-  // setInterval(() => {
-  //   updateTable = getUserData();
-  //   roomData = getRoomData();
+  updateTable = getUserData();
+  updateTable = getUserData();
+  roomData = getRoomData();
   // }, 400);
   roomsTbody.innerHTML = ``;
   Object.entries(roomData).map(([roomId, room]) => {
-    let newData = updateTable.find((data) => data.id == roomId); // Returns object of user data whose room id matches the current room Id
+    let newBookingData = updateTable.find((data) => data.id == roomId); // Returns object of user data whose room id matches the current room Id
     let roomAvailableDate;
-    let currentStatus = room.status; // Exctracts the room status of current room
-    if (newData) {
-      roomAvailableDate = new Date(newData.checkout).toLocaleDateString();
+    // If change in data or new entry is available and that room is vacant(State edited) then it sets the available date of new entry
+    if (newBookingData && room.status != "Vacant") {
+      roomAvailableDate = new Date(
+        newBookingData.checkout
+      ).toLocaleDateString();
     } else {
-      roomAvailableDate = "    - ";
+      roomAvailableDate = " - ";
     }
+    let currentStatus = room.status; // Exctracts the room status of current room
     const newInfoRow = document.createElement("tr");
     newInfoRow.innerHTML = `
     <td>${roomId}</td>
@@ -99,9 +110,6 @@ function getElementValue(elem) {
   return document.querySelector(elem).value;
 }
 
-function updateLocalStorageData(roomData) {
-  let newRoomData = localStorage.setItem("rooms", JSON.stringify(roomData));
-}
 function addNewRoom(
   newRoomType,
   newRoomImg,
@@ -116,26 +124,54 @@ function addNewRoom(
   newRoomId
 ) {
   let currentRoomData = getRoomData();
-  let bedInfoArr = [];
+  let kingBedInfo;
+  let queenBedInfo;
+  let singleBedInfo;
   if (isKingSizedAvailable) {
-    bedInfoArr.push(`${kingSizedCount} King Sized`);
+    kingBedInfo = kingSizedCount
   }
   if (isQueenSizedAvailable) {
-    bedInfoArr.push(`${queenSizedCount} Queen Sized`);
+    queenBedInfo = queenSizedCount;
   }
   if (isSingleSizedAvailable) {
-    bedInfoArr.push(`${singleSizedCount} Single Bed`);
+    singleBedInfo = singleSizedCount;
   }
-  let newData = {
+  let newBookingData = {
     [newRoomId]: {
       type: newRoomType,
       image: newRoomImg,
       capacity: newRoomCapacity,
       price: Number(newRoomRate),
-      bedInfo: bedInfoArr.join("+"),
+      // bedInfo: bedInfoArr.join(" "),
+      kingBedInfo : kingBedInfo,
+      queenBedInfo: queenBedInfo,
+      singleBedInfo : singleBedInfo,
       status: "Vacant",
     },
   };
-  const updatedData = { ...currentRoomData, ...newData };
+  const updatedData = { ...currentRoomData, ...newBookingData };
   updateLocalStorageData(updatedData);
+  updateRoomsInfo(); // Updates the table in manage room section
+}
+function deleteDialog(roomId, row) {
+  let deleteDialogContainer = document.querySelector(".delete-dialog-wrapper");
+  let deleteRecordBtn = document.querySelector(".delete-room-btn");
+  let cancelDeletionBtn = document.querySelector(".cancel-delete-btn");
+  deleteDialogContainer.style.display = "flex";
+  console.log(deleteRecordBtn);
+  deleteRecordBtn.addEventListener("click", () => {
+    // console.log(roomId);
+    let currentData = getRoomData();
+    delete currentData[roomId];
+    updateLocalStorageData(currentData);
+    setTimeout(() => {
+      row.remove();
+    }, 800);
+    deleteDialogContainer.style.display = "none";
+
+    cancelDeletionBtn.addEventListener("click", () => {
+      deleteDialogContainer.style.display = "none";
+    });
+    // console.log("HELLO");
+  });
 }
