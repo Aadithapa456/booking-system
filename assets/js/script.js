@@ -18,10 +18,10 @@ let newRooms = Object.entries(roomsData).map(([roomId, room]) => {
   // bedInfoContainer.appendChild(newBedInfoContainer);
   console.log(room);
   newRoomCard.classList.add("room-card");
-  // const bedInfoContainer = document.createElement("ul");
-  // const newBedInfoContainer = document.createElement("li");
-  // newBedInfoContainer.innerHTML = `<i class="fa-solid fa-bed"> </i>${room.bedInfo}`;
-  // bedInfoContainer.appendChild(newBedInfoContainer);
+  const bedInfoContainer = document.createElement("ul");
+  const newBedInfoContainer = document.createElement("li");
+  newBedInfoContainer.innerHTML = `<i class="fa-solid fa-bed"> </i>${room.bedInfo}`;
+  bedInfoContainer.appendChild(newBedInfoContainer);
   newRoomCard.insertAdjacentHTML(
     "afterbegin",
     `
@@ -37,14 +37,10 @@ let newRooms = Object.entries(roomsData).map(([roomId, room]) => {
                         ${room.price}$ <span class="night-info">/night</span>
                     </div>
                     <div class="room-labels">
-                        1 Person
+                        ${room.capacity} Person
                     </div>
                     <div class="bed-info">
-                        <ul> 
-                            <li> ${room.kingBedInfo} King Sized</li>
-                            <li> ${room.queenBedInfo} Queen Sized</li>
-                            <li> ${room.singleBedInfo} Single Bed</li>
-                        </ul>
+                        ${bedInfoContainer.outerHTML}
                     </div>
 
                     <div class="room-reserve-btn">

@@ -124,17 +124,15 @@ function addNewRoom(
   newRoomId
 ) {
   let currentRoomData = getRoomData();
-  let kingBedInfo;
-  let queenBedInfo;
-  let singleBedInfo;
+  let bedInfoArr = [];
   if (isKingSizedAvailable) {
-    kingBedInfo = kingSizedCount
+    bedInfoArr.push(`${kingSizedCount} King Sized`);
   }
   if (isQueenSizedAvailable) {
-    queenBedInfo = queenSizedCount;
+    bedInfoArr.push(`${queenSizedCount} Queen Sized`);
   }
   if (isSingleSizedAvailable) {
-    singleBedInfo = singleSizedCount;
+    bedInfoArr.push(`${singleSizedCount} Single Bed`);
   }
   let newBookingData = {
     [newRoomId]: {
@@ -142,10 +140,7 @@ function addNewRoom(
       image: newRoomImg,
       capacity: newRoomCapacity,
       price: Number(newRoomRate),
-      // bedInfo: bedInfoArr.join(" "),
-      kingBedInfo : kingBedInfo,
-      queenBedInfo: queenBedInfo,
-      singleBedInfo : singleBedInfo,
+      bedInfo: bedInfoArr.join(" "),
       status: "Vacant",
     },
   };
