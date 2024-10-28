@@ -41,7 +41,6 @@ function updateRoomsInfo() {
   roomsTbody.innerHTML = ``;
   Object.entries(roomData).map(([roomId, room]) => {
     let newData = updateTable.find((data) => data.id == roomId); // Returns object of user data whose room id matches the current room Id
-    console.log(newData);
     let roomAvailableDate;
     let currentStatus = room.status; // Exctracts the room status of current room
     if (newData) {
@@ -156,7 +155,10 @@ function handleEditRoom(event) {
 }
 function handleDeleteRoom(event) {
   const row = event.target.closest("tr");
-  console.log(row);
+  const roomId = row.cells[0].innerHTML;
+  let currentData = getRoomData();
+  delete currentData[roomId]; // Deletes the data of the roomId corresponding to the selected row
+  updateLocalStorageData(currentData);
   row.remove();
 }
 function showEditRoomModal(roomId) {
@@ -167,10 +169,12 @@ function showEditRoomModal(roomId) {
   modalEditRoom.style.display = "flex";
   roomIdDisplay.value = roomId;
   closeModalEditRoomBtn.addEventListener("click", () => {
-    modalEditRoom.style.display = "none";
+    hideEditRoomModal(modalEditRoom);
   });
 }
-
+function hideEditRoomModal(modalEditRoom) {
+  modalEditRoom.style.display = "none";
+}
 function getRoomData() {
   let roomData = JSON.parse(localStorage.getItem("rooms"));
   return roomData;
