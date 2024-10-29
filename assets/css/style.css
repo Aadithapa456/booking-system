@@ -137,7 +137,9 @@ input {
   width: fit-content;
   margin: 0.8rem 0 1.8rem 0.6rem;
 }
-
+.room-labels i{
+  padding: 0 .4rem;
+}
 .room-card .bed-info {
   padding: 3rem 0;
   user-select: text;

@@ -34,7 +34,7 @@ let newRooms = Object.entries(roomsData).map(([roomId, room]) => {
                         ${room.price}$ <span class="night-info">/night</span>
                     </div>
                     <div class="room-labels">
-                        ${room.capacity} Person
+                        ${room.capacity} Person <i class="fa-solid fa-user"></i>
                     </div>
                     <div class="bed-info">
                         ${bedInfoContainer.outerHTML}
