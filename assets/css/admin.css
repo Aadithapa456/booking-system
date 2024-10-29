@@ -18,7 +18,9 @@ button {
   cursor: pointer;
   border: 0;
   outline: 0;
+  -webkit-tap-highlight-color: transparent;
 }
+
 .sidebar {
   padding: 20px;
   color: #ecf0f1;
@@ -41,6 +43,7 @@ button {
   z-index: 20;
   display: none;
   color: #626f77;
+  -webkit-tap-highlight-color: transparent;
 }
 .sidebar .logo {
   font-size: 2.5rem;
@@ -144,6 +147,9 @@ main .user-welcome {
   gap: 8px;
   align-items: center;
   border-radius: 6px;
+}
+.add-room-btn:active {
+  border-style: outset;
 }
 .add-room-btn i {
   font-size: 1.3rem;
