@@ -41,7 +41,7 @@ let noOfGuestsInputField = document.querySelector("#guest-number");
 let roomPriceDisplay = document.querySelector(".price-details");
 let roomDropdownContainer = document.querySelector(".dropdown-options ul");
 let selectedRoomEntry;
-let selectedRoomId;
+let selectedRoomId = roomId;
 
 //Populating the dropdown
 Object.entries(room).map(([roomId, room]) => {
@@ -112,7 +112,7 @@ function reservation(
     id: selectedRoomId,
   };
   saveUserData(userData);
-  updateLocalStorage();
+  updateRoomStatus();
 }
 function updatePricing() {
   let currentTime = new Date();
@@ -189,12 +189,6 @@ function hideSuccessDialog(successDialog) {
   // resetForm();
 }
 function resetForm() {
-  // showBookingSummary(
-  //   nameInputField.value,
-  //   contactInputField.value,
-  //   emailInputField.value,
-  //   checkin
-  // );
   nameInputField.value = "";
   contactInputField.value = "";
   emailInputField.value = "";
@@ -217,13 +211,12 @@ function resetForm() {
 //   document.body.appendChild(summaryDialog);
 // }
 
-// function addRoom() {}
 function saveUserData(userData) {
   let newUserDat = JSON.parse(localStorage.getItem("user-info")) || [];
   newUserDat.push(userData);
   localStorage.setItem("user-info", JSON.stringify(newUserDat));
 }
-function updateLocalStorage() {
+function updateRoomStatus() {
   let updatedRoomData = Object.entries(room).find(([roomId, room]) => {
     return room.type == document.querySelector(".selected").innerHTML;
   });

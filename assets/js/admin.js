@@ -52,7 +52,7 @@ function updateBookingsInfo() {
   let bookingTbody = document.querySelector(".bookings-tbody");
   bookingTbody.innerHTML = ``;
   // setInterval(() => {
-  updateTable = getUserData();
+  updateTable = getUserData() || [];
   roomData = getRoomData();
   // }, 400);
   // let updateTable = getUserData();
@@ -72,21 +72,21 @@ function updateBookingsInfo() {
 }
 function updateRoomsInfo() {
   let roomsTbody = document.querySelector(".manage-rooms-tbody");
-  updateTable = getUserData();
-  updateTable = getUserData();
-  roomData = getRoomData();
+  updateTable = getUserData() || [];
+  roomData = getRoomData() || {};
   // }, 400);
   roomsTbody.innerHTML = ``;
   Object.entries(roomData).map(([roomId, room]) => {
     let newBookingData = updateTable.find((data) => data.id == roomId); // Returns object of user data whose room id matches the current room Id
+    console.log(newBookingData);
     let roomAvailableDate;
     // If change in data or new entry is available and that room is vacant(State edited) then it sets the available date of new entry
-    if (newBookingData && room.status != "Vacant") {
+    if (newBookingData && newBookingData.checkout && room.status !== "Vacant") {
       roomAvailableDate = new Date(
         newBookingData.checkout
       ).toLocaleDateString();
     } else {
-      roomAvailableDate = " - ";
+      roomAvailableDate = " -";
     }
     let currentStatus = room.status; // Exctracts the room status of current room
     const newInfoRow = document.createElement("tr");
@@ -140,7 +140,7 @@ function addNewRoom(
       image: newRoomImg,
       capacity: newRoomCapacity,
       price: Number(newRoomRate),
-      bedInfo: bedInfoArr.join(" "),
+      bedInfo: bedInfoArr.join(" | "),
       status: "Vacant",
     },
   };
@@ -170,3 +170,22 @@ function deleteDialog(roomId, row) {
     // console.log("HELLO");
   });
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebarToggle = document.querySelector(".sidebar-toggle");
+  const sidebar = document.querySelector(".sidebar");
+  const wrapper = document.querySelector(".wrapper");
+
+  // Toggle sidebar visibility
+  sidebarToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+      wrapper.classList.toggle("active"); // Adjust main content if needed
+  });
+
+  // Close sidebar when clicking outside of it on mobile
+  document.addEventListener("click", (event) => {
+      if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+          sidebar.classList.remove("active");
+          wrapper.classList.remove("active");
+      }
+  });
+});

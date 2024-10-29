@@ -4,13 +4,22 @@
   box-sizing: border-box;
   font-family: "Poppins";
 }
-:root {
+/* :root {
   --main-bg-color: #f5f5f5;
   --header-bg-color: #243642;
-  --header-text-color: #ccd1d3;
+
   --text-color: #ffffff;
+ 
+ 
+} */
+:root {
+  --primary-bg-color: #f8fafc;
+  --header-bg-color: #2a3e4c;
+  --header-text-color: #f0f4f8;
+  --text-color: #334155;
   --main-btn-color: #387478;
   --main-btn-hover-color: #2d5f63;
+  --accent-color: #fbbf24;
 }
 ::selection {
   color: white;
@@ -28,14 +37,16 @@ header {
   background-color: var(--header-bg-color);
   display: flex;
   justify-content: center;
-  letter-spacing: 1.5px;
+  letter-spacing: 2.2px;
   align-items: center;
-  font-size: 3.8rem;
+  font-size: 4.2rem;
   user-select: none;
   color: var(--header-text-color);
+  font-weight: 550;
 }
 main {
   /* background-color: var(--main-bg-color); */
+  background-color: var(--primary-bg-color);
   background-color: #f3f6f9;
   background-image: radial-gradient(rgba(0, 0, 0, 0.2) 1px, transparent 0);
   background-size: 60px 60px;
@@ -74,20 +85,23 @@ input {
   justify-self: center;
 }
 .room-card {
-  /* background-color: var(--header-bg-color); */
   background-color: #ffffff;
-  /* width: 50%; */
   border-radius: 14px;
   overflow: hidden;
-  /* color: var(--text-color); */
-  color: #333;
+  color: var(--text-color);
   margin: 1rem;
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
   user-select: none;
+  border: 1px solid #e5e7eb;
+  transition: 0.5s;
+}
+.room-card:hover {
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+  transform: translateY(-10px);
 }
 .room-card img {
   width: 100%;
-  border-bottom: 2px solid #d1d9e0;
+  border-bottom: 4px solid #d1d9e0;
   height: auto;
 }
 .main-room-content {
@@ -99,58 +113,50 @@ input {
 }
 .room-card .room-type {
   user-select: text;
-  /* padding-top: 3rem; */
-  margin-top: 0.4rem;
-  /* text-align: center; */
-  color: #333;
-  font-size: 2rem;
+  margin-top: 0.5rem;
+  color: var(--text-color);
+  font-size: 2.2rem;
+  padding: 0 0 0.1rem 0.2rem;
   font-weight: bold;
 }
 .room-card .price-info {
-   font-size: 1.6rem;
-   font-weight: bold;
-   color: #e5533d;
-   margin-bottom: 5px;
-   padding: .4rem .5rem;
- }
- 
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #e5533d;
+  margin-bottom: 5px;
+  padding: 0.4rem 0 0.3rem 0.2rem;
+}
+
 .room-labels {
   background-color: #90ee90;
-  color: #333;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   border-radius: 15px;
   text-align: center;
-  padding: 0.6rem 1.2rem;
+  padding: 0.7rem 1.4rem;
   width: fit-content;
-  margin: 0.8rem 0 .3rem 0.4rem;
+  margin: 0.8rem 0 1.8rem 0.6rem;
 }
 
-.room-card .room-info .separator {
-  width: 0.5px;
-  height: 10px;
-  background-color: #e3e3e3;
-}
 .room-card .bed-info {
   padding: 3rem 0;
   user-select: text;
   font-size: 1.4rem;
   list-style: none;
   padding: 0;
-  margin: 10px 0 0;
+  margin: 10px 0;
   color: #444;
 }
 .room-card .bed-info li {
   display: flex;
   align-items: center;
   font-size: 1.4rem;
-  padding: 0.8rem 0;
+  padding: 0.8rem;
 }
 .room-card .bed-info i {
   color: #888;
   margin-right: 8px;
 }
-
 
 .room-card .price-info .night-info {
   color: #a3b1b8;
@@ -160,17 +166,19 @@ input {
 }
 .room-card .room-reserve-btn {
   text-align: center;
-  padding: 2.5rem 0;
+  padding: 2.5rem 0 1rem 0;
 }
 .room-card button {
   border: none;
   background-color: var(--main-btn-color);
-  color: var(--text-color);
+  color: #f3f6f9;
   padding: 1rem 3.2rem;
   cursor: pointer;
   border-radius: 8px;
+  transition: 0.6s;
 }
 .room-card button:hover {
+  transform: translateY(-3px);
   background-color: var(--main-btn-hover-color); /* Darker on hover */
 }
 /* Dropdown section  */

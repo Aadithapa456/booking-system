@@ -8,15 +8,12 @@ fetch("../components/header.html")
   })
   .catch((err) => console.error("Error loading header:", err));
 
+let searchDelay;
 let roomCardContainer = document.querySelector(".room-card-area");
-let timeout;
-// rooms[0].type = "Standard Room";
 updateLocalStorage(rooms);
 let roomsData = JSON.parse(localStorage.getItem("rooms")) || rooms;
 let newRooms = Object.entries(roomsData).map(([roomId, room]) => {
   const newRoomCard = document.createElement("div");
-  // bedInfoContainer.appendChild(newBedInfoContainer);
-  console.log(room);
   newRoomCard.classList.add("room-card");
   const bedInfoContainer = document.createElement("ul");
   const newBedInfoContainer = document.createElement("li");
@@ -63,9 +60,10 @@ let newRooms = Object.entries(roomsData).map(([roomId, room]) => {
   // <div class="room-reserve-btn">
   //   <button class="reserve-btn">Reserve Now</button>
   // </div>
+  // console.log(roomBtn);
   return newRoomCard;
 });
-newRooms.forEach(room => roomCardContainer.appendChild(room))
+newRooms.forEach((room) => roomCardContainer.appendChild(room));
 let roomCards = document.querySelectorAll(".room-card");
 let reserveButtons = document.querySelectorAll(".room-reserve-btn button");
 reserveButtons.forEach((button, index) => {
@@ -79,13 +77,13 @@ reserveButtons.forEach((button, index) => {
 // Search functionality
 let userInput = document.querySelector("#search-room");
 userInput.addEventListener("input", (e) => {
-  clearTimeout(timeout);
+  clearsearchDelay(searchDelay);
   //Converting the NodeList from cardContainer to Array
   Array.from(roomCards).forEach((item) => {
     const roomType = item.querySelector(".room-type").textContent.toLowerCase();
     const searchValue = e.target.value.toLowerCase();
     console.log(searchValue);
-    timeout = setTimeout(() => {
+    searchDelay = setsearchDelay(() => {
       item.style.display = roomType.includes(searchValue) ? "block" : "none";
     }, 1100);
   });
