@@ -35,7 +35,7 @@ Booking system is a small project done by me to improve my understanding of Java
 
 ```plaintext
 booking-system/
-├── assets/                  # Directory for assets (images, icons, css, js etc.)
+├── assets/ # Directory for assets (images, icons, css, js etc.)
 │   ├── css/
 │   │
 │   ├── js/
@@ -49,6 +49,7 @@ booking-system/
 │
 ├── [index.html] # Main entry point of the application
 └── [README.md] # Documentation file
+```
 
 ### Description of the Structure
 
@@ -56,7 +57,6 @@ booking-system/
 - **`booking.html`**: The HTML file dedicated to the booking page.
 - **`index.html`**: The main HTML file that serves as the entry point for the application.
 - **`README.md`**: This file containing documentation and project details.
-```
 
 ## Contributing
 
