@@ -29,10 +29,6 @@ Booking system is a small project done by me to improve my understanding of Java
 
 ## File Structure
 
-## File Structure
-
-## File Structure
-
 ```plaintext
 booking-system/
 ├── assets/ # Directory for assets (images, icons, css, js etc.)
