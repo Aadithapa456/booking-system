@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return id == roomId;
   }); // Returns the array of room data having the selected room's ID
   // console.log(selectedRoomEntry);
-  selectedOption.innerHTML = selectedRoomEntry[1].type; // Room data is on the 1st index of the received data
+  selectedOption.innerHTML = selectedRoomEntry[1].type || []; // Room data is on the 1st index of the received data
   let selectedRoomPrice = selectedRoomEntry[1].price || "200"; // Directly accesses the price from url param
   currentRate = selectedRoomPrice;
   roomPriceDisplay.innerHTML = `${selectedRoomPrice} <span>$</span>`; // Updating room price according to selected room
@@ -98,21 +98,21 @@ function reservation(
     showErrorDialog(errorDialogContainer, "Invalid email");
   } else {
     showSuccessDialog(successDialogContainer);
+    let userData = {
+      name: name.value,
+      contact: contact.value,
+      email: email.value,
+      checkin: checkin,
+      checkout: checkout,
+      "Guest Number": noOfGuestsInputField.value,
+      daysStaying: daysStaying,
+      type: document.querySelector(".selected").innerHTML,
+      rate: currentRate,
+      id: selectedRoomId,
+    };
+    saveUserData(userData);
+    updateRoomStatus();
   }
-  let userData = {
-    name: name.value,
-    contact: contact.value,
-    email: email.value,
-    checkin: checkin,
-    checkout: checkout,
-    "Guest Number": noOfGuestsInputField.value,
-    daysStaying: daysStaying,
-    type: document.querySelector(".selected").innerHTML,
-    rate: currentRate,
-    id: selectedRoomId,
-  };
-  saveUserData(userData);
-  updateRoomStatus();
 }
 function updatePricing() {
   let currentTime = new Date();
@@ -186,7 +186,7 @@ closeSuccessDialogBtn.addEventListener("click", () => {
 function hideSuccessDialog(successDialog) {
   successDialog.classList.add("hide");
   successDialog.classList.remove("visible");
-  // resetForm();
+  resetForm();
 }
 function resetForm() {
   nameInputField.value = "";
@@ -195,6 +195,7 @@ function resetForm() {
   checkinInputField.value = "";
   checkoutInputField.value = "";
   roomPriceDisplay.innerHTML = "";
+  noOfGuestsInputField.value = "";
 }
 // function showBookingSummary(name, contact, email, checkin, checkout) {
 //   const summaryDialog = document.createElement("div");

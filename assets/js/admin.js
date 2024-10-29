@@ -2,7 +2,7 @@ import {
   getUserData,
   getRoomData,
   updateLocalStorageData,
-} from "./fetch-localstorage.js";
+} from "./room-data.js";
 
 let bookingsBtn = document.querySelector(".bookings-btn");
 let manageRoomBtn = document.querySelector(".manage-btn");
@@ -80,7 +80,6 @@ function updateRoomsInfo() {
   roomsTbody.innerHTML = ``;
   Object.entries(roomData).map(([roomId, room]) => {
     let newBookingData = updateTable.find((data) => data.id == roomId); // Returns object of user data whose room id matches the current room Id
-    console.log(newBookingData);
     let roomAvailableDate;
     // If change in data or new entry is available and that room is vacant(State edited) then it sets the available date of new entry
     if (newBookingData && newBookingData.checkout && room.status !== "Vacant") {

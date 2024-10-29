@@ -1,8 +1,4 @@
-import {
-  getUserData,
-  getRoomData,
-  updateLocalStorageData,
-} from "./fetch-localstorage.js";
+import { getRoomData, updateLocalStorageData } from "./room-data.js";
 
 // Dynamically adding add room modal component in DOM
 fetch("add-room-modal.html")

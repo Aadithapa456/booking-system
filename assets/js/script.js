@@ -1,4 +1,4 @@
-import { rooms } from "./room-types.js";
+import { rooms } from "./room-data.js";
 import { initializeDropdown } from "./dropdown.js";
 
 fetch("../components/header.html")
@@ -70,7 +70,6 @@ reserveButtons.forEach((button, index) => {
   button.addEventListener("click", () => {
     const roomNumber = Object.keys(roomsData)[index];
     const price = roomsData[roomNumber].price;
-    console.log(price);
     redirectToBooking(roomNumber, price);
   });
 });
@@ -82,7 +81,6 @@ userInput.addEventListener("input", (e) => {
   Array.from(roomCards).forEach((item) => {
     const roomType = item.querySelector(".room-type").textContent.toLowerCase();
     const searchValue = e.target.value.toLowerCase();
-    console.log(searchValue);
     searchDelay = setsearchDelay(() => {
       item.style.display = roomType.includes(searchValue) ? "block" : "none";
     }, 1100);
