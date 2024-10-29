@@ -60,12 +60,14 @@ function updateBookingsInfo() {
   updateTable.forEach((newBookingData, index) => {
     const newRow = document.createElement("tr");
     newRow.innerHTML = `
-    <td>${index + 1}</td>
-    <td>${newBookingData.name}</td>
-    <td>${newBookingData.email}</td>
-    <td>${newBookingData.contact}</td>
-    <td>${newBookingData.type}</td>
-    <td>${new Date(newBookingData.checkin).toLocaleDateString()}</td>
+    <td data-label ="S.N" >${index + 1}</td>
+    <td data-label ="Name" >${newBookingData.name}</td>
+    <td data-label ="Email" >${newBookingData.email}</td>
+    <td data-label ="Contact" >${newBookingData.contact}</td>
+    <td data-label ="Room Booked" >${newBookingData.type}</td>
+    <td data-label ="Check-in Data" >${new Date(
+      newBookingData.checkin
+    ).toLocaleDateString()}</td>
     `;
     bookingTbody.appendChild(newRow);
   });
@@ -91,14 +93,16 @@ function updateRoomsInfo() {
     let currentStatus = room.status; // Exctracts the room status of current room
     const newInfoRow = document.createElement("tr");
     newInfoRow.innerHTML = `
-    <td>${roomId}</td>
-    <td>${room.type}</td>
-    <td>${room.price}</td>
-    <td><span class="status ${currentStatus}">${currentStatus}</span></td>
-    <td >${roomAvailableDate}</td>
-    <td>
-        <button class="edit-data"><i class="fa-solid fa-pen-to-square"></i></button>
-        <button class="delete-data"> <i class="fa-solid fa-trash"></i></button>
+    <td data-label = "Room Id">${roomId}</td>
+    <td data-label = "Room Type">${room.type}</td>
+    <td data-label = "Rate">${room.price}</td>
+    <td data-label = "Status"><span class="status ${currentStatus}">${currentStatus}</span></td>
+    <td data-label = "Available From" >${roomAvailableDate}</td>
+    <td data-label = "Update">
+        <div class = "td-edit-area flex">
+          <button class="edit-data"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="delete-data"> <i class="fa-solid fa-trash"></i></button>
+        </div>
     </td>
     `;
     roomsTbody.appendChild(newInfoRow);
@@ -152,8 +156,9 @@ function deleteDialog(roomId, row) {
   let deleteDialogContainer = document.querySelector(".delete-dialog-wrapper");
   let deleteRecordBtn = document.querySelector(".delete-room-btn");
   let cancelDeletionBtn = document.querySelector(".cancel-delete-btn");
+  let exitDeletionBtn = document.querySelector(".exit-btn");
+  console.log(cancelDeletionBtn);
   deleteDialogContainer.style.display = "flex";
-  console.log(deleteRecordBtn);
   deleteRecordBtn.addEventListener("click", () => {
     // console.log(roomId);
     let currentData = getRoomData();
@@ -162,14 +167,21 @@ function deleteDialog(roomId, row) {
     setTimeout(() => {
       row.remove();
     }, 800);
-    deleteDialogContainer.style.display = "none";
-
-    cancelDeletionBtn.addEventListener("click", () => {
-      deleteDialogContainer.style.display = "none";
-    });
+    // deleteDialogContainer.style.display = "none";
+    hideDeleteDialog(deleteDialogContainer);
     // console.log("HELLO");
   });
+  cancelDeletionBtn.addEventListener("click", () => {
+    hideDeleteDialog(deleteDialogContainer);
+  });
+  exitDeletionBtn.addEventListener("click", () => {
+    hideDeleteDialog(deleteDialogContainer);
+  });
 }
+function hideDeleteDialog(deleteDialogContainer) {
+  deleteDialogContainer.style.display = "none";
+}
+// Sidebar Toggle Logic
 document.addEventListener("DOMContentLoaded", () => {
   const sidebarToggle = document.querySelector(".sidebar-toggle");
   const sidebar = document.querySelector(".sidebar");
@@ -177,15 +189,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Toggle sidebar visibility
   sidebarToggle.addEventListener("click", () => {
-      sidebar.classList.toggle("active");
-      wrapper.classList.toggle("active"); // Adjust main content if needed
+    sidebar.classList.toggle("active");
+    wrapper.classList.toggle("active"); // Adjust main content if needed
   });
-
   // Close sidebar when clicking outside of it on mobile
   document.addEventListener("click", (event) => {
-      if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
-          sidebar.classList.remove("active");
-          wrapper.classList.remove("active");
-      }
+    if (
+      !sidebar.contains(event.target) &&
+      !sidebarToggle.contains(event.target)
+    ) {
+      sidebar.classList.remove("active");
+      wrapper.classList.remove("active");
+    }
   });
 });
