@@ -24,7 +24,6 @@ let closeErrorDialogButton = document.querySelector(".error-remove-btn");
 let errorDialogTimeoutId;
 
 // Accessing success dialog elements
-let successDialogContainer = document.querySelector(".success-dialog-container");
 
 // Accessing the form input fields
 let closeSuccessDialogBtn = document.querySelector(".success-close-btn");
@@ -54,6 +53,7 @@ initializeDropdown(".dropdown-select-item", roomPriceDisplay);
 
 // Getting rate of selected room
 let currentRate;
+let totalPrice;
 let optionsContainer = document.querySelectorAll("#option li");
 // Changes the rate when any other rooms are selected from dropdown
 optionsContainer.forEach((option) => {
@@ -85,8 +85,15 @@ function getPriceOfSelectedRoom(roomId) {
   });
   return selectedRoomEntry[1]; // Actual room data is in 1st index of the array
 }
-function handleReservation(name, contact, email, checkin, checkout, noOfGuestsInputField, daysStaying) {
-
+function handleReservation(
+  name,
+  contact,
+  email,
+  checkin,
+  checkout,
+  noOfGuestsInputField,
+  daysStaying
+) {
   let userData = {
     name: name.value,
     contact: contact.value,
@@ -96,14 +103,12 @@ function handleReservation(name, contact, email, checkin, checkout, noOfGuestsIn
     "Guest Number": noOfGuestsInputField.value,
     daysStaying: daysStaying,
     type: document.querySelector(".selected").innerHTML,
-    rate: currentRate,
+    total: totalPrice,
     id: selectedRoomId,
   };
-  // If credentials are valid then the code below will execute 
+  // If credentials are valid then the code below will execute
   if (validateFormInputs(userData)) {
-    showSuccessDialog(successDialogContainer);
-    saveUserData(userData);
-    updateRoomStatus();
+    showBookingSummary(userData);
   }
 }
 function updatePricing() {
@@ -120,7 +125,7 @@ function updatePricing() {
   } else {
     // If user hasn't entered both check-in and out date then else part will be executed
     if (!isNaN(checkInDate.getTime()) && !isNaN(checkOutDate.getTime()) && stayPeriod > 0) {
-      let totalPrice = stayPeriod * currentRate;
+      totalPrice = stayPeriod * currentRate;
       roomPriceDisplay.innerHTML = `${totalPrice} <span>$</span>`;
     } else {
       roomPriceDisplay.innerHTML = `${currentRate} <span>$</span>`;
@@ -198,8 +203,9 @@ function hideErrorCard(errorCard) {
   }, 1190);
 }
 
-function showSuccessDialog(successDialog) {
-  successDialog.classList.add("visible");
+let successDialogContainer = document.querySelector(".success-dialog-container");
+function showSuccessDialog() {
+  successDialogContainer.classList.add("visible");
   // successDialog.style.display = "flex";
 }
 closeSuccessDialogBtn.addEventListener("click", () => {
@@ -219,21 +225,37 @@ function resetForm() {
   roomPriceDisplay.innerHTML = "";
   noOfGuestsInputField.value = "";
 }
-// function showBookingSummary(name, contact, email, checkin, checkout) {
-//   const summaryDialog = document.createElement("div");
-//   summaryDialog.classList.add("summary-dialog");
-//   summaryDialog.innerHTML = `
-//        <h2>Booking Summary</h2>
-//        <p><strong>Name:</strong> ${name}</p>
-//        <p><strong>Contact:</strong> ${contact}</p>
-//        <p><strong>Email:</strong> ${email}</p>
-//        <p><strong>Check-in Date:</strong> ${checkin}</p>
-//        <p><strong>Check-out Date:</strong> ${checkout}</p>
-//        <button onclick="closeSummary()">Close</button>
-//    `;
-//   document.body.appendChild(summaryDialog);
-// }
-
+function showBookingSummary(userData) {
+  const summaryContainer = document.querySelector(".summary-wrapper");
+  summaryContainer.style.display = "flex";
+  const summaryDialog = document.querySelector(".summary-dialog");
+  let checkInDate = new Date(userData.checkin).toLocaleDateString();
+  let checkoutDate = new Date(userData.checkout).toLocaleDateString();
+  summaryDialog.classList.add("summary-dialog");
+  summaryDialog.innerHTML = `
+            <div class="summary-title">
+                Booking Summary
+            </div>
+            <div class="summary-info">
+                <div class="summary-name">Name: <span>${userData.name}</span></div>
+                <div class="summary-contact">Contact: <span>${userData.contact}</span></div>
+                <div class="summary-email">Email: <span>${userData.email}</span></div>
+                <div class="summary-checkin">Check-in: <span>${checkInDate}</span></div>
+                <div class="summary-checkout">Check-out <span>${checkoutDate}</span></div>
+                <div class="summary-price">Total: <span>${userData.total}$</span></div>
+            </div>
+            <div class="confirm-booking-btn">
+                <button>Confirm Booking</button>
+            </div>`;
+  let confirmBookingBtn = document.querySelector(".confirm-booking-btn button");
+  confirmBookingBtn.addEventListener("click", () => {
+    summaryContainer.style.display = "none";
+    saveUserData(userData);
+    updateRoomStatus();
+    showSuccessDialog();
+  });
+  summaryContainer.body.appendChild(summaryDialog);
+}
 function saveUserData(userData) {
   let newUserDat = JSON.parse(localStorage.getItem("user-info")) || [];
   newUserDat.push(userData);

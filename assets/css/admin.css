@@ -206,8 +206,7 @@ main .user-welcome {
 }
 .modal-title {
   justify-content: space-between;
-  font-size: 1.4rem;
-  padding: 1.2rem 0;
+ 
 }
 .modal-title button {
   padding: 1rem 1.2rem;

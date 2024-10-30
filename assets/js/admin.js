@@ -67,6 +67,7 @@ function updateBookingsInfo() {
     <td data-label ="Contact" >${newBookingData.contact}</td>
     <td data-label ="Room Booked" >${newBookingData.type}</td>
     <td data-label ="Check-in Data" >${new Date(newBookingData.checkin).toLocaleDateString()}</td>
+    <td data-label = "Total"> ${newBookingData.total} $</td>
     `;
     bookingTbody.appendChild(newRow);
   });
@@ -153,7 +154,6 @@ function deleteDialog(roomId, row) {
   let deleteRecordBtn = document.querySelector(".delete-room-btn");
   let cancelDeletionBtn = document.querySelector(".cancel-delete-btn");
   let exitDeletionBtn = document.querySelector(".exit-btn");
-  console.log(cancelDeletionBtn);
   deleteDialogContainer.style.display = "flex";
   deleteRecordBtn.addEventListener("click", () => {
     // console.log(roomId);
