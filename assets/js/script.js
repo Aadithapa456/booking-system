@@ -12,7 +12,7 @@ let searchDelay;
 let roomCardContainer = document.querySelector(".room-card-area");
 updateLocalStorage(rooms);
 let roomsData = JSON.parse(localStorage.getItem("rooms")) || rooms;
-// Creats room card elements from localstorage 
+// Creats room card elements from localstorage
 let newRooms = Object.entries(roomsData).map(([roomId, room]) => {
   const newRoomCard = document.createElement("div");
   newRoomCard.classList.add("room-card");
@@ -90,8 +90,7 @@ userInput.addEventListener("input", (e) => {
 });
 // initializeDropdown(".dropdown-select-item");
 function updateLocalStorage(rooms) {
-  let currentLocalStorageData =
-    JSON.parse(localStorage.getItem("rooms")) || rooms;
+  let currentLocalStorageData = JSON.parse(localStorage.getItem("rooms")) || rooms;
   localStorage.setItem("rooms", JSON.stringify(currentLocalStorageData));
 }
 function redirectToBooking(roomNumber, price) {

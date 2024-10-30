@@ -24,9 +24,7 @@ let closeErrorDialogButton = document.querySelector(".error-remove-btn");
 let errorDialogTimeoutId;
 
 // Accessing success dialog elements
-let successDialogContainer = document.querySelector(
-  ".success-dialog-container"
-);
+let successDialogContainer = document.querySelector(".success-dialog-container");
 
 // Accessing the form input fields
 let closeSuccessDialogBtn = document.querySelector(".success-close-btn");
@@ -87,35 +85,23 @@ function getPriceOfSelectedRoom(roomId) {
   });
   return selectedRoomEntry[1]; // Actual room data is in 1st index of the array
 }
-function reservation(
-  name,
-  contact,
-  email,
-  checkin,
-  checkout,
-  noOfGuestsInputField,
-  daysStaying
-) {
-  if (!emailRegex.test(email.value) && !phoneRegex.test(contact.value)) {
-    showErrorDialog(errorDialogContainer, "Invalid email & contact");
-  } else if (!phoneRegex.test(contact.value)) {
-    showErrorDialog(errorDialogContainer, "Invalid contact");
-  } else if (!emailRegex.test(email.value)) {
-    showErrorDialog(errorDialogContainer, "Invalid email");
-  } else {
+function handleReservation(name, contact, email, checkin, checkout, noOfGuestsInputField, daysStaying) {
+
+  let userData = {
+    name: name.value,
+    contact: contact.value,
+    email: email.value,
+    checkin: checkin,
+    checkout: checkout,
+    "Guest Number": noOfGuestsInputField.value,
+    daysStaying: daysStaying,
+    type: document.querySelector(".selected").innerHTML,
+    rate: currentRate,
+    id: selectedRoomId,
+  };
+  // If credentials are valid then the code below will execute 
+  if (validateFormInputs(userData)) {
     showSuccessDialog(successDialogContainer);
-    let userData = {
-      name: name.value,
-      contact: contact.value,
-      email: email.value,
-      checkin: checkin,
-      checkout: checkout,
-      "Guest Number": noOfGuestsInputField.value,
-      daysStaying: daysStaying,
-      type: document.querySelector(".selected").innerHTML,
-      rate: currentRate,
-      id: selectedRoomId,
-    };
     saveUserData(userData);
     updateRoomStatus();
   }
@@ -133,11 +119,7 @@ function updatePricing() {
     showErrorDialog(errorDialogContainer, "Invalid check-in date");
   } else {
     // If user hasn't entered both check-in and out date then else part will be executed
-    if (
-      !isNaN(checkInDate.getTime()) &&
-      !isNaN(checkOutDate.getTime()) &&
-      stayPeriod > 0
-    ) {
+    if (!isNaN(checkInDate.getTime()) && !isNaN(checkOutDate.getTime()) && stayPeriod > 0) {
       let totalPrice = stayPeriod * currentRate;
       roomPriceDisplay.innerHTML = `${totalPrice} <span>$</span>`;
     } else {
@@ -147,7 +129,7 @@ function updatePricing() {
 }
 
 bookBtn.addEventListener("click", () =>
-  reservation(
+  handleReservation(
     nameInputField,
     contactInputField,
     emailInputField,
@@ -159,6 +141,40 @@ bookBtn.addEventListener("click", () =>
 );
 checkinInputField.addEventListener("input", () => updatePricing());
 checkoutInputField.addEventListener("input", () => updatePricing());
+contactInputField.addEventListener("input", () => {
+  let invalidContactLabel = document.querySelector(".form-validation-contact");
+  checkUserCredentials(invalidContactLabel, contactInputField.value, phoneRegex);
+});
+emailInputField.addEventListener("input", () => {
+  let invalidEmailLabel = document.querySelector(".form-validation-email");
+  checkUserCredentials(invalidEmailLabel, emailInputField.value, emailRegex);
+});
+
+function validateFormInputs(data) {
+  let isEmailValid = emailRegex.test(data.email);
+  let isContactValid = phoneRegex.test(data.contact);
+  let hasError = false;
+
+  if (!isEmailValid && !isContactValid) {
+    showErrorDialog(errorDialogContainer, "Invalid contact & email");
+    hasError = true;
+  } else if (!isContactValid) {
+    showErrorDialog(errorDialogContainer, "Invalid contact number");
+    hasError = true;
+  } else if (!isEmailValid) {
+    showErrorDialog(errorDialogContainer, "Invalid email");
+    hasError = true;
+  }
+
+  return !hasError; // Returns true only if it passes all test cases
+}
+function checkUserCredentials(invalidLabel, inputValue, regex) {
+  if (!regex.test(inputValue)) {
+    invalidLabel.style.display = "flex";
+  } else {
+    invalidLabel.style.display = "none";
+  }
+}
 closeErrorDialogButton.addEventListener("click", () => {
   hideErrorCard(errorDialogContainer, 1190);
 });

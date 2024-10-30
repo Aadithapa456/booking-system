@@ -1,8 +1,4 @@
-import {
-  getUserData,
-  getRoomData,
-  updateLocalStorageData,
-} from "./room-data.js";
+import { getUserData, getRoomData, updateLocalStorageData } from "./room-data.js";
 
 let bookingsBtn = document.querySelector(".bookings-btn");
 let manageRoomBtn = document.querySelector(".manage-btn");
@@ -70,9 +66,7 @@ function updateBookingsInfo() {
     <td data-label ="Email" >${newBookingData.email}</td>
     <td data-label ="Contact" >${newBookingData.contact}</td>
     <td data-label ="Room Booked" >${newBookingData.type}</td>
-    <td data-label ="Check-in Data" >${new Date(
-      newBookingData.checkin
-    ).toLocaleDateString()}</td>
+    <td data-label ="Check-in Data" >${new Date(newBookingData.checkin).toLocaleDateString()}</td>
     `;
     bookingTbody.appendChild(newRow);
   });
@@ -88,9 +82,7 @@ function updateRoomsInfo() {
     let roomAvailableDate;
     // If change in data or new entry is available and that room is vacant(State edited) then it sets the available date of new entry
     if (newBookingData && newBookingData.checkout && room.status !== "Vacant") {
-      roomAvailableDate = new Date(
-        newBookingData.checkout
-      ).toLocaleDateString();
+      roomAvailableDate = new Date(newBookingData.checkout).toLocaleDateString();
     } else {
       roomAvailableDate = " -";
     }
@@ -198,10 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // Close sidebar when clicking outside of it on mobile
   document.addEventListener("click", (event) => {
-    if (
-      !sidebar.contains(event.target) &&
-      !sidebarToggle.contains(event.target)
-    ) {
+    if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
       sidebar.classList.remove("active");
       wrapper.classList.remove("active");
     }

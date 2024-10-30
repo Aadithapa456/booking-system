@@ -33,6 +33,16 @@ main {
 form {
   font-size: 1.4rem;
 }
+.form-validation-group {
+  align-items: center;
+  gap: 0.6rem;
+  color: #d9534f;
+  display: none;
+  padding: 1rem 0.8rem;
+}
+.form-validation-group i {
+  font-style: 1.5rem;
+}
 .personal-details-section {
   padding: 3.1rem 3.5rem;
   margin: 2rem 0;
@@ -45,8 +55,10 @@ form {
   min-height: 40rem;
   height: 57rem;
 }
-.personal-details-section input {
-  margin-bottom: 5rem;
+.personal-details-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
 }
 label {
   display: block;
@@ -58,7 +70,6 @@ input {
   max-width: 320px;
   width: 280px;
   padding: 1.2rem 1.2rem;
-  margin-bottom: 2rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1.2rem;
@@ -86,7 +97,9 @@ input[type="text"] {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   border-radius: 14px;
 }
-
+.room-details-section input {
+  margin-bottom: 2rem;
+}
 .check-in-out {
   display: grid; /* Use grid layout for forms */
   grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
@@ -160,7 +173,7 @@ input[type="text"] {
 .error-container {
   background-color: #ffb880;
   min-width: 28rem;
-  width: 34rem;
+  width: 32rem;
   opacity: 0;
   justify-content: space-between;
   align-items: center;
@@ -188,7 +201,7 @@ input[type="text"] {
   font-size: 1.7rem;
 }
 .error-right {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   width: 100%;
   padding-left: 3rem;
   justify-content: space-between;
@@ -197,7 +210,7 @@ input[type="text"] {
 }
 .error-right .error-text {
   color: #333333;
-  font-size: 1.5rem;
+  /* font-size: 1.5rem; */
 }
 .error-remove {
   cursor: pointer;

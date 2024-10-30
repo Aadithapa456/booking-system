@@ -26,9 +26,7 @@ function initializeModal() {
   let queenSizedCheckbox = document.querySelector("#queen-sized");
   let queenSizedCountInputField = document.querySelector("#queen-sized-count");
   let singleSizedCheckbox = document.querySelector("#single-sized");
-  let singleSizedCountInputField = document.querySelector(
-    "#single-sized-count"
-  );
+  let singleSizedCountInputField = document.querySelector("#single-sized-count");
   let roomRateInputField = document.querySelector("#price");
   let submitRoomBtn = document.querySelector(".submit-room-btn");
   let closeModalBtn = document.querySelector(".close-modal");
@@ -65,12 +63,8 @@ function addEditDeleteListeners() {
   const editBtns = document.querySelectorAll(".edit-data");
   const deleteBtns = document.querySelectorAll(".delete-data");
 
-  editBtns.forEach((editBtn) =>
-    editBtn.addEventListener("click", handleEditRoom)
-  );
-  deleteBtns.forEach((deleteBtn) =>
-    deleteBtn.addEventListener("click", handleDeleteRoom)
-  );
+  editBtns.forEach((editBtn) => editBtn.addEventListener("click", handleEditRoom));
+  deleteBtns.forEach((deleteBtn) => deleteBtn.addEventListener("click", handleDeleteRoom));
   let closeModalEditRoomBtn = document.querySelector(".close-edit-modal");
   closeModalEditRoomBtn.addEventListener("click", () => {
     hideEditRoomModal();
@@ -83,9 +77,7 @@ function handleEditRoom(event) {
   let editStatusInputField = document.querySelector("#status");
   let currentData = getRoomData();
   // Extracts the room-data which matches the room-data of the button of the row
-  let requiredData = Object.entries(currentData).find(
-    ([Id, room]) => roomId == Id
-  );
+  let requiredData = Object.entries(currentData).find(([Id, room]) => roomId == Id);
   let submitEditedRoomBtn = document.querySelector(".submit-btn");
   submitEditedRoomBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -108,10 +100,6 @@ function showEditRoomModal(roomId) {
 function handleDeleteRoom(event) {
   const row = event.target.closest("tr");
   const roomId = row.cells[0].innerHTML;
-  // let currentData = getRoomData();
-  // delete currentData[roomId]; // Deletes the data of the roomId corresponding to the selected row
-  // updateLocalStorageData(currentData);
-  // row.remove();
   const DELETE_EVENT = new CustomEvent("roomDeleted", {
     detail: { roomId, row },
   });
