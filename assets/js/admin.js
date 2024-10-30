@@ -37,6 +37,11 @@ document.addEventListener("roomAdded", (event) => {
 document.addEventListener("roomDeleted", (event) => {
   deleteDialog(event.detail.roomId, event.detail.row);
 });
+// If the room is edited the data is instantly updated on the UI
+document.addEventListener("roomEdited", (event) => {
+  console.log(event.detail);
+  updateRoomsInfo(event.detail);
+});
 // document.addEventListener(
 //   "DOMContentLoaded",
 //   updateRoomsInfo,

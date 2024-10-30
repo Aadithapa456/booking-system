@@ -12,6 +12,7 @@ let searchDelay;
 let roomCardContainer = document.querySelector(".room-card-area");
 updateLocalStorage(rooms);
 let roomsData = JSON.parse(localStorage.getItem("rooms")) || rooms;
+// Creats room card elements from localstorage 
 let newRooms = Object.entries(roomsData).map(([roomId, room]) => {
   const newRoomCard = document.createElement("div");
   newRoomCard.classList.add("room-card");
@@ -63,6 +64,7 @@ let newRooms = Object.entries(roomsData).map(([roomId, room]) => {
   // console.log(roomBtn);
   return newRoomCard;
 });
+// Dynamically appends room card in DOM
 newRooms.forEach((room) => roomCardContainer.appendChild(room));
 let roomCards = document.querySelectorAll(".room-card");
 let reserveButtons = document.querySelectorAll(".room-reserve-btn button");
@@ -76,17 +78,17 @@ reserveButtons.forEach((button, index) => {
 // Search functionality
 let userInput = document.querySelector("#search-room");
 userInput.addEventListener("input", (e) => {
-  clearsearchDelay(searchDelay);
+  clearTimeout(searchDelay);
   //Converting the NodeList from cardContainer to Array
   Array.from(roomCards).forEach((item) => {
     const roomType = item.querySelector(".room-type").textContent.toLowerCase();
     const searchValue = e.target.value.toLowerCase();
-    searchDelay = setsearchDelay(() => {
+    searchDelay = setTimeout(() => {
       item.style.display = roomType.includes(searchValue) ? "block" : "none";
     }, 1100);
   });
 });
-initializeDropdown(".dropdown-select-item");
+// initializeDropdown(".dropdown-select-item");
 function updateLocalStorage(rooms) {
   let currentLocalStorageData =
     JSON.parse(localStorage.getItem("rooms")) || rooms;

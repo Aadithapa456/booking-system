@@ -12,7 +12,7 @@ let room = JSON.parse(localStorage.getItem("rooms"));
 
 // Accessing the selected room
 const urlParams = new URLSearchParams(window.location.search);
-const roomId = urlParams.get("roomId");
+const userRequestRoomId = urlParams.get("roomId");
 
 // REGEX
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -40,13 +40,12 @@ let bookBtn = document.querySelector(".book-btn");
 let noOfGuestsInputField = document.querySelector("#guest-number");
 let roomPriceDisplay = document.querySelector(".price-details");
 let roomDropdownContainer = document.querySelector(".dropdown-options ul");
-let selectedRoomEntry;
-let selectedRoomId = roomId;
+// let selectedRoomEntry;
+let selectedRoomId = userRequestRoomId;
 
 //Populating the dropdown
 Object.entries(room).map(([roomId, room]) => {
   let li = document.createElement("li");
-  li.setAttribute("data-price", room.price);
   li.setAttribute("room-id", roomId);
   li.innerHTML = `${room.type}`;
   roomDropdownContainer.appendChild(li);
@@ -61,8 +60,9 @@ let optionsContainer = document.querySelectorAll("#option li");
 // Changes the rate when any other rooms are selected from dropdown
 optionsContainer.forEach((option) => {
   option.addEventListener("click", () => {
-    let selectedRate = option.getAttribute("data-price");
+    // let selectedRate = option.getAttribute("data-price");
     selectedRoomId = option.getAttribute("room-id");
+    let selectedRate = getPriceOfSelectedRoom(selectedRoomId).price;
     roomPriceDisplay.innerHTML = `${selectedRate} <span>$</span`;
     currentRate = selectedRate;
   });
@@ -70,17 +70,23 @@ optionsContainer.forEach((option) => {
 
 // Changes the room rate and display room id corresponding to the room id, provided from the room selected by user
 document.addEventListener("DOMContentLoaded", () => {
-  let selectedOption = document.querySelector(".selected"); // Accesing the current selected option in dropdown
-  selectedRoomEntry = Object.entries(room).find(([id, room]) => {
-    return id == roomId;
-  }); // Returns the array of room data having the selected room's ID
-  // console.log(selectedRoomEntry);
-  selectedOption.innerHTML = selectedRoomEntry[1].type || []; // Room data is on the 1st index of the received data
-  let selectedRoomPrice = selectedRoomEntry[1].price || "200"; // Directly accesses the price from url param
+  // Accesing the current selected option in dropdown
+  let selectedOption = document.querySelector(".selected");
+  let currentRoom = getPriceOfSelectedRoom(userRequestRoomId);
+  selectedOption.innerHTML = currentRoom.type || [];
+  let selectedRoomPrice = currentRoom.price || "200";
   currentRate = selectedRoomPrice;
-  roomPriceDisplay.innerHTML = `${selectedRoomPrice} <span>$</span>`; // Updating room price according to selected room
+  // Updating room price according to selected room
+  roomPriceDisplay.innerHTML = `${selectedRoomPrice} <span>$</span>`;
 });
 
+function getPriceOfSelectedRoom(roomId) {
+  // Finds the room data from localstorage having the given roomId
+  let selectedRoomEntry = Object.entries(room).find(([id, room]) => {
+    return id == roomId;
+  });
+  return selectedRoomEntry[1]; // Actual room data is in 1st index of the array
+}
 function reservation(
   name,
   contact,

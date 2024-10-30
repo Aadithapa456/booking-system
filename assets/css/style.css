@@ -62,18 +62,24 @@ main {
 }
 input {
   user-select: none;
-  padding: 0.9rem 1rem;
-  width: 250px;
+  padding: 1.6rem 4rem;
+  font-size: 1.6rem;
+  width: 70%;
   min-width: 80px;
   transition: 0.9s;
-  border-radius: 8px;
+  border-radius: 12px;
   border-color: #6b8385;
   outline: 0;
+  color: #333;
   border: 0;
+  transition: 0.3s;
+}
+.search-area input::placeholder{
+  color: #8a9a9b;
 }
 .search-area #search-room:focus {
   border: 1px solid #6b8385;
-  box-shadow: none;
+  box-shadow: 0px 0px 6px rgba(107, 131, 133, 0.5); 
 }
 .room-card-area {
   display: grid;
@@ -137,8 +143,8 @@ input {
   width: fit-content;
   margin: 0.8rem 0 1.8rem 0.6rem;
 }
-.room-labels i{
-  padding: 0 .4rem;
+.room-labels i {
+  padding: 0 0.4rem;
 }
 .room-card .bed-info {
   padding: 3rem 0;
@@ -258,7 +264,7 @@ ul {
   list-style-type: none;
 }
 @media (max-width: 480px) {
-  html{
+  html {
     overflow-x: hidden;
   }
   header {

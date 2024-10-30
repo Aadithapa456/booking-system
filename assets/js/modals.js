@@ -93,6 +93,9 @@ function handleEditRoom(event) {
     requiredData[1].status = editStatusInputField.value;
     requiredData[1].price = Number(editRateInputField.value);
     updateLocalStorageData(currentData);
+    hideEditRoomModal();
+    const editEvent = new CustomEvent("roomEdited", { detail: currentData });
+    document.dispatchEvent(editEvent);
   });
   showEditRoomModal(roomId);
 }
