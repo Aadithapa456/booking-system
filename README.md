@@ -7,7 +7,7 @@ Booking system is a small project done by me to improve my understanding of Java
 ## Features
 
 - **Room Booking**: Users can book rooms by providing necessary details.
-- **Manage Bookings**: Admin can view, edit, and delete bookings.details.
+- **Manage Bookings**: Admin can view, edit, and delete bookings details.
 - **Responsive Design**: The application is responsive and works well on different screen sizes.
 
 ## Installation
