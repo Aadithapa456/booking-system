@@ -12,15 +12,17 @@ Booking system is a small project done by me to improve my understanding of Java
 
 ## Installation
 
-1. **Clone the repository**:
+1. **Fork the repository**:
+
+2. **Clone the repository**:
    ```sh
    git clone https://github.com/your-username/booking-system.git
    ```
-2. **Navigate to the project directory**:
+3. **Navigate to the project directory**:
    ```sh
    cd booking-system
    ```
-3. **Open the project in your preferred code editor**.
+4. **Open the project in your preferred code editor**.
 
 ## Usage
 
