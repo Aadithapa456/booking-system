@@ -1,5 +1,3 @@
-# Booking System
-
 ## Overview
 
 Booking system is a small project done by me to improve my understanding of JavaScript and learn about CRUD operations. This project allows users to book rooms, manage bookings, and view room details locally with the help of localStorage.
@@ -9,6 +7,12 @@ Booking system is a small project done by me to improve my understanding of Java
 - **Room Booking**: Users can book rooms by providing necessary details.
 - **Manage Bookings**: Admin can view, edit, and delete bookings details.
 - **Responsive Design**: The application is responsive and works well on different screen sizes.
+
+## Architecture 
+
+Below is the CRUD architecture diagram of the project, which outlines the structure and data flow for creating, reading, updating, and deleting room bookings:
+
+![CRUD Architecture Diagram](https://github.com/user-attachments/assets/b05bad15-df1a-4ff7-b43e-6178152987d8)
 
 ## Installation
 
